@@ -38,7 +38,7 @@ body {
   background-color: blue;
 }
 
-.time {
+.face .time {
   position: absolute;
 
   width: 100%;
@@ -54,76 +54,74 @@ body {
 
   color: white;
 }
+
+.player {
+  position: absolute;
+
+  left: 0;
+  top: 360px;
+
+  width: 640px;
+  height: 30px;
+}
+
+.player .time {
+  display: inline-block;
+  width: 260px;
+  font-size: 9px;
+
+  text-align: center;
+}
   </style>
 </head>
 <body>
 
 <div class="wrapper">
-  <div id="player"></div>
   <div class="face">
     <div class="earth"></div>
     <div class="time"><time></time></div>
   </div>
+  <div class="player">
+    <input type="button" value="▶" class="btn-play">
+    <span class="time"><time class="time-cur"></time> / <time class="time-total"></time></span>
+    <input type="range" min="0" max="1" step="0.00001" value="0" class="slider">
+  </div>
 </div>
 
+<script src="jquery.js"></script>
 <script>
-var tag = document.createElement('script');
-
-tag.src = "https://www.youtube.com/iframe_api";
-var firstScriptTag = document.getElementsByTagName('script')[0];
-firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
-var player;
-function onYouTubeIframeAPIReady() {
-  player = new YT.Player('player', {
-    height: '390',
-    width: '640',
-    videoId: 'JTEFKFiXSx4',
-    events: {
-      onReady: onPlayerReady,
-      onStateChange: onPlayerStateChange,
-      playerVars: {
-        autohide: 0,
-        controls: 1,
-        modestbranding: 1,
-      },
-    }
-  });
-}
-
-function onPlayerReady(event) {
-  event.target.setVolume(0)
-  event.target.playVideo();
-}
-
-var done = false;
-function onPlayerStateChange(event) {
-  // if (event.data == YT.PlayerState.PLAYING && !done) {
-  //   setTimeout(stopVideo, 6000);
-  //   done = true;
-  // }
-}
-function stopVideo() {
-  player.stopVideo();
-}
-
 var recentDate = new Date(2016, 3, 30, 13 - 9, 4, 33);
-var epochDate = new Date(-62135661600000); // 西暦1年1月1日0時0分0秒
+var epochDate = new Date(-62135596800000); // 西暦1年1月1日0時0分0秒
+var curDate = epochDate;
+var $slider = $('.slider');
+var $time = $('.face .time time');
+var $timeCur = $('.player .time-cur');
+var $timeTotal = $('.player .time-total');
+var ratio;
+
+function formatDate(date) {
+  var ret = `${date.getUTCFullYear()}年${date.getUTCMonth() + 1}月${date.getUTCDate()}日 ${date.getUTCHours()}:${date.getUTCMinutes()}:${date.getUTCSeconds()}`;
+  return ret;
+}
 
 function updateTime() {
-  if(player && player.getCurrentTime && player.getDuration()) {
-    var cur = player.getCurrentTime();
-    var dur = player.getDuration();
-    var ratio = cur / dur;
+  ratio = $slider.val();
 
-    var curDate = new Date(epochDate.valueOf() + (recentDate.valueOf() - epochDate.valueOf()) * ratio);
-
-    var timeElm = document.querySelector('.time time');
-    timeElm.innerText = curDate.toISOString();
-  }
+  $time.text(formatDate(curDate));
+  $timeCur.text(formatDate(curDate));
   requestAnimationFrame(updateTime);
 }
 requestAnimationFrame(updateTime);
+
+$timeTotal.text(formatDate(recentDate));
+
+$slider.on('change', function() {
+  curDate = new Date(epochDate.valueOf() + (recentDate.valueOf() - epochDate.valueOf()) * ratio);
+});
+
+setInterval(function() {
+  curDate = new Date(curDate.valueOf() + 1000);
+}, 1000);
 </script>
 
   
