@@ -5,7 +5,10 @@ var $slider = $('.slider');
 var $time = $('.face .time time');
 var $timeCur = $('.controller .time-cur');
 var $timeTotal = $('.controller .time-total');
+var $btnGotohead = $('.controller .btn-gotohead');
+var $btnPlay = $('.controller .btn-play');
 var ratio;
+var timerId;
 
 function formatDate(date) {
   var ret = `${date.getUTCFullYear()}年${date.getUTCMonth() + 1}月${date.getUTCDate()}日 ${date.getUTCHours()}:${date.getUTCMinutes()}:${date.getUTCSeconds()}`;
@@ -27,6 +30,40 @@ $slider.on('change', function() {
   curDate = new Date(epochDate.valueOf() + (recentDate.valueOf() - epochDate.valueOf()) * ratio);
 });
 
-setInterval(function() {
+$btnPlay.on('click', function() {
+  var $this = $(this);
+
+  if($this.hasClass('pause')) {
+    $this.removeClass('pause');
+    play();
+  } else {
+    $this.addClass('pause');
+    pause();
+  }
+});
+
+$btnGotohead.on('click', function() {
+  pause();
+  curDate = epochDate;
+
+  if(!$this.hasClass('pause')) {
+    play();
+  }
+});
+
+play();
+
+function incr() {
   curDate = new Date(curDate.valueOf() + 1000);
-}, 1000);
+}
+
+function play() {
+  timerId = setInterval(incr, 1000);
+}
+
+function pause() {
+  clearInterval(timerId);
+}
+
+function updateSlider() {
+}
