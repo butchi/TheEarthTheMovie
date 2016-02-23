@@ -12,6 +12,9 @@ button {
   button:hover {
     cursor: pointer;
   }
+  button[disabled]:hover {
+    cursor: default;
+  }
 
 .face {
   position: absolute;
@@ -93,7 +96,7 @@ button {
   .controller .btn-play {
     width: 30px;
     height: 30px;
-    background-image: url(../img/play.svg);
+    background-image: url(../img/pause.svg);
     background-repeat: no-repeat;
     background-position: 50% 35%;
     background-size: 40px;
@@ -101,7 +104,7 @@ button {
     text-indent: -9999px;
   }
   .controller .btn-play.pause {
-    background-image: url(../img/pause.svg);
+    background-image: url(../img/play.svg);
   }
   .controller .btn-sound {
     width: 30px;
