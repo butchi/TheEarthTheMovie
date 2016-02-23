@@ -11,7 +11,7 @@ var ratio;
 var timerId;
 
 function formatDate(date) {
-  var ret = `${date.getUTCFullYear()}年${date.getUTCMonth() + 1}月${date.getUTCDate()}日 ${date.getUTCHours()}:${date.getUTCMinutes()}:${date.getUTCSeconds()}`;
+  var ret = `${date.getUTCFullYear()}年${date.getUTCMonth() + 1}月${date.getUTCDate()}日 ${('00' + (date.getUTCHours())).slice(-2)}:${('00' + (date.getUTCMinutes())).slice(-2)}:${('00' + (date.getUTCSeconds())).slice(-2)}`;
   return ret;
 }
 
