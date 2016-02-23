@@ -1,6 +1,9 @@
-var recentDate = new Date(2016, 3, 30, 13 - 9, 4, 33);
-var epochDate = new Date(-62135596800000); // 西暦1年1月1日0時0分0秒
-var curDate = epochDate;
+'use strict';
+
+var recentDate = new Date(2016, 3, 30, 13 + 9, 4, 33);
+// var epochDate = new Date(-62135596800000); // 西暦1年1月1日0時0分0秒
+var epochDate = new Date(2016, 3, 30, 13 + 9, 4, 20);
+var player;
 var $slider = $('.slider');
 var $time = $('.face .time time');
 var $timeCur = $('.controller .time-cur');
@@ -16,10 +19,15 @@ function formatDate(date) {
 }
 
 function updateTime() {
-  ratio = $slider.val();
+  var curDate = player.getCurrentTime();
+
+  ratio = (curDate.valueOf() - player.startDate.valueOf()) / player.duration;
 
   $time.text(formatDate(curDate));
   $timeCur.text(formatDate(curDate));
+
+  $slider.val(ratio);
+
   requestAnimationFrame(updateTime);
 }
 requestAnimationFrame(updateTime);
@@ -27,7 +35,8 @@ requestAnimationFrame(updateTime);
 $timeTotal.text(formatDate(recentDate));
 
 $slider.on('change', function() {
-  curDate = new Date(epochDate.valueOf() + (recentDate.valueOf() - epochDate.valueOf()) * ratio);
+  player.$dispatcher.trigger('update');
+  player.seekTo(new Date(epochDate.valueOf() + (recentDate.valueOf() - epochDate.valueOf()) * ratio));
 });
 
 $btnPlay.on('click', function() {
@@ -35,35 +44,31 @@ $btnPlay.on('click', function() {
 
   if($this.hasClass('pause')) {
     $this.removeClass('pause');
-    play();
+    player.playVideo();
   } else {
     $this.addClass('pause');
-    pause();
+    player.pauseVideo();
   }
 });
 
 $btnGotohead.on('click', function() {
-  pause();
-  curDate = epochDate;
+  player.pauseVideo();
 
   if(!$this.hasClass('pause')) {
-    play();
+    player.playVideo();
   }
 });
 
-play();
+player = new Player({
+  start_date: epochDate,
+  end_date: recentDate, 
+});
 
-function incr() {
-  curDate = new Date(curDate.valueOf() + 1000);
-}
+player.playVideo();
 
-function play() {
-  timerId = setInterval(incr, 1000);
-}
-
-function pause() {
-  clearInterval(timerId);
-}
+player.$dispatcher.on('onStateChange', function(_, data) {
+  console.log(data);
+});
 
 function updateSlider() {
 }
