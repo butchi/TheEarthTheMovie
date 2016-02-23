@@ -12,10 +12,18 @@
     <div class="earth"></div>
     <div class="time"><time></time></div>
   </div>
-  <div class="player">
-    <input type="button" value="▶" class="btn-play">
-    <span class="time"><time class="time-cur"></time> / <time class="time-total"></time></span>
+  <div class="controller">
+    <button class="btn-gotohead">Go to head</button>
+    <button class="btn-play">Play / Pause</button>
+    <button class="btn-sound">Sound on / off</button>
+    <span class="time">
+      <time class="time-cur"></time>
+      /
+      <time class="time-total"></time>
+    </span>
     <input type="range" min="0" max="1" step="0.00001" value="0" class="slider">
+
+    <button class="btn-setting">Setting</button>
   </div>
 </div>
 

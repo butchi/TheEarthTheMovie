@@ -3,8 +3,8 @@ var epochDate = new Date(-62135596800000); // 西暦1年1月1日0時0分0秒
 var curDate = epochDate;
 var $slider = $('.slider');
 var $time = $('.face .time time');
-var $timeCur = $('.player .time-cur');
-var $timeTotal = $('.player .time-total');
+var $timeCur = $('.controller .time-cur');
+var $timeTotal = $('.controller .time-total');
 var ratio;
 
 function formatDate(date) {

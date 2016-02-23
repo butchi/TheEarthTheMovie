@@ -2,6 +2,17 @@ body {
   margin: 0;
 }
 
+button {
+  border: none;
+  background-color: transparent;
+
+  margin: 0;
+  padding: 0;
+  }
+  button:hover {
+    cursor: pointer;
+  }
+
 .face {
   position: absolute;
 
@@ -48,20 +59,69 @@ body {
   color: white;
 }
 
-.player {
+.controller {
   position: absolute;
 
   left: 0;
-  top: 360px;
+  top: 350px;
 
   width: 640px;
   height: 30px;
-}
 
-.player .time {
-  display: inline-block;
-  width: 260px;
-  font-size: 9px;
+  color: #fff;
+  background-color: #000;
+  }
 
-  text-align: center;
-}
+  .controller .time {
+    display: inline-block;
+    width: 260px;
+    font-size: 9px;
+
+    text-align: center;
+  }
+
+  .controller .btn-gotohead {
+    width: 30px;
+    height: 30px;
+    background-image: url(../img/gotohead.svg);
+    background-repeat: no-repeat;
+    background-position: 50% 35%;
+    background-size: 40px;
+
+    text-indent: -9999px;
+  }
+  .controller .btn-play {
+    width: 30px;
+    height: 30px;
+    background-image: url(../img/play.svg);
+    background-repeat: no-repeat;
+    background-position: 50% 35%;
+    background-size: 40px;
+
+    text-indent: -9999px;
+  }
+  .controller .btn-play.pause {
+    background-image: url(../img/pause.svg);
+  }
+  .controller .btn-sound {
+    width: 30px;
+    height: 30px;
+    background-image: url(../img/sound_on.svg);
+    background-repeat: no-repeat;
+    background-position: 50% 35%;
+    background-size: 40px;
+
+    text-indent: -9999px;
+  }
+  .controller .btn-sound.off {
+  }
+  .controller .btn-setting {
+    width: 30px;
+    height: 30px;
+    background-image: url(../img/setting.svg);
+    background-repeat: no-repeat;
+    background-position: 50% 35%;
+    background-size: 40px;
+
+    text-indent: -9999px;
+  }
