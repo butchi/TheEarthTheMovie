@@ -1,8 +1,8 @@
 'use strict';
 
 var recentDate = new Date(2016, 3, 30, 13 + 9, 4, 33);
-// var epochDate = new Date(-62135596800000); // 西暦1年1月1日0時0分0秒
-var epochDate = new Date(2016, 3, 30, 13 + 9, 4, 20);
+var epochDate = new Date(-62135596800000); // 西暦1年1月1日0時0分0秒
+// var epochDate = new Date(2016, 3, 30, 13 + 9, 4, 20);
 var player;
 var $slider = $('.slider');
 var $time = $('.face .time time');
@@ -26,13 +26,22 @@ function updateTime() {
   $time.text(formatDate(curDate));
   $timeCur.text(formatDate(curDate));
 
-  $slider.val(ratio);
+  if(player.getPlayerState() === player.PlayerState.PLAYING) {
+    $slider.val(ratio);
+  }
 
   requestAnimationFrame(updateTime);
 }
 requestAnimationFrame(updateTime);
 
 $timeTotal.text(formatDate(recentDate));
+
+$slider.on('input', function() {
+  var ratio = $(this).val();
+  // player.pauseVideo();
+  player.seekTo(new Date(player.startDate.valueOf() + player.duration * ratio));
+  updateTime();
+});
 
 $slider.on('change', function() {
   player.$dispatcher.trigger('update');
@@ -52,23 +61,19 @@ $btnPlay.on('click', function() {
 });
 
 $btnGotohead.on('click', function() {
-  player.pauseVideo();
-
-  if(!$this.hasClass('pause')) {
-    player.playVideo();
-  }
+  player.seekTo(epochDate);
+  $slider.val(0);
 });
 
 player = new Player({
   start_date: epochDate,
-  end_date: recentDate, 
+  end_date: recentDate,
+  $btn_play: $btnPlay,
+  $slider: $slider,
 });
 
 player.playVideo();
 
 player.$dispatcher.on('onStateChange', function(_, data) {
-  console.log(data);
+  console.log('state:', data);
 });
-
-function updateSlider() {
-}

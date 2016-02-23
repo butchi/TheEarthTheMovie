@@ -6,6 +6,9 @@ class Player {
     this.endDate = opts.end_date || new Date();
     this.duration = this.endDate.valueOf() - this.startDate.valueOf();
 
+    this.$btnPlay = opts.$btn_play;
+    this.$slider = opts.$slider;
+
     this.PlayerState = {
       'ENDED'   : 0,
       'PLAYING' : 1,
@@ -29,9 +32,7 @@ class Player {
 
     timerId = setInterval(() => {
       if(this.curDate.valueOf() >= this.endDate.valueOf()) {
-        clearInterval(timerId);
-        this._state = this.PlayerState.ENDED;
-        this.triggerStateChange();
+        this.stopVideo();
       }
       this.curDate = new Date(this.curDate.valueOf() + 1000);
     }, 1000);
@@ -47,6 +48,10 @@ class Player {
     clearInterval(timerId);
     this._state = this.PlayerState.ENDED;
     this.triggerStateChange();
+    this.$btnPlay.addClass('pause');
+
+    this.seekTo(this.startDate);
+    this.$slider.val(0);
   }
 
   seekTo(date) {
