@@ -1,0 +1,26 @@
+{
+  "name": "TheEarthTheMovie",
+  "version": "0.0.1",
+  "description": "The Earth The Movie",
+  "main": "js/main.min.js",
+  "authors": [
+    "IWABUCHI Yuuki"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "earth"
+  ],
+  "moduleType": [],
+  "homepage": "http://butchi.jp/",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "devDependencies": {
+    "jquery": "~2.2.2",
+    "lodash": "~4.7.0"
+  }
+}
