@@ -3633,6 +3633,8 @@ exports.default = Player;
 },{}],10:[function(require,module,exports){
 'use strict';
 
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
 var _Player = require('./Player');
 
 var _Player2 = _interopRequireDefault(_Player);
@@ -3647,87 +3649,118 @@ var _jpegJs2 = _interopRequireDefault(_jpegJs);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-console.log(_jpegJs2.default.encode);
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var recentDate = new Date(2016, 3, 30, 13 + 9, 4, 33);
-var epochDate = new Date(-62135596800000); // 西暦1年1月1日0時0分0秒
-// var epochDate = new Date(2016, 3, 30, 13 + 9, 4, 20);
-var player;
-var $slider = $('.slider');
-var $time = $('.face .time time');
-var $timeCur = $('.controller .time-cur');
-var $timeTotal = $('.controller .time-total');
-var $btnGotohead = $('.controller .btn-gotohead');
-var $btnPlay = $('.controller .btn-play');
-var ratio;
-var timerId;
+var Main = function () {
+  function Main() {
+    var _this = this;
 
-function formatDate(date) {
-  var ret = date.getUTCFullYear() + '年' + (date.getUTCMonth() + 1) + '月' + date.getUTCDate() + '日 ' + ('00' + date.getUTCHours()).slice(-2) + ':' + ('00' + date.getUTCMinutes()).slice(-2) + ':' + ('00' + date.getUTCSeconds()).slice(-2);
-  return ret;
-}
+    var opts = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
 
-function updateTime() {
-  var curDate = player.getCurrentTime();
+    _classCallCheck(this, Main);
 
-  ratio = (curDate.valueOf() - player.startDate.valueOf()) / player.duration;
+    this.recentDate = new Date(2016, 3, 30, 13 + 9, 4, 33);
+    this.epochDate = new Date(-62135596800000); // 西暦1年1月1日0時0分0秒
+    // var epochDate = new Date(2016, 3, 30, 13 + 9, 4, 20);
+    this.$slider = $('.slider');
+    this.$time = $('.face .time time');
+    this.$timeCur = $('.controller .time-cur');
+    this.$timeTotal = $('.controller .time-total');
+    this.$btnGotohead = $('.controller .btn-gotohead');
+    this.$btnPlay = $('.controller .btn-play');
 
-  $time.text(formatDate(curDate));
-  $timeCur.text(formatDate(curDate));
+    requestAnimationFrame(function () {
+      _this.updateTime();
+    });
 
-  if (player.getPlayerState() === player.PlayerState.PLAYING) {
-    $slider.val(ratio);
+    this.$timeTotal.text(this.formatDate(this.recentDate));
+
+    this.$slider.on('input', function () {
+      _this.ratio = $(_this).val();
+      // player.pauseVideo();
+      _this.player.seekTo(new Date(player.startDate.valueOf() + _this.player.duration * _this.ratio));
+      _this.updateTime();
+    });
+
+    this.$slider.on('change', function () {
+      _this.player.$dispatcher.trigger('update');
+      _this.player.seekTo(new Date(epochDate.valueOf() + (recentDate.valueOf() - epochDate.valueOf()) * _this.ratio));
+    });
+
+    this.$btnPlay.on('click', function () {
+      var $this = $(_this);
+
+      if ($this.hasClass('pause')) {
+        $this.removeClass('pause');
+        _this.player.playVideo();
+      } else {
+        $this.addClass('pause');
+        _this.player.pauseVideo();
+      }
+    });
+
+    this.$btnGotohead.on('click', function () {
+      _this.player.seekTo(epochDate);
+      $slider.val(0);
+    });
+
+    this.initialize();
   }
 
-  requestAnimationFrame(updateTime);
-}
-requestAnimationFrame(updateTime);
+  _createClass(Main, [{
+    key: 'initialize',
+    value: function initialize() {
+      var player = new _Player2.default({
+        start_date: this.epochDate,
+        end_date: this.recentDate,
+        $btn_play: this.$btnPlay,
+        $slider: this.$slider
+      });
+      this.player = player;
 
-$timeTotal.text(formatDate(recentDate));
+      player.playVideo();
 
-$slider.on('input', function () {
-  var ratio = $(this).val();
-  // player.pauseVideo();
-  player.seekTo(new Date(player.startDate.valueOf() + player.duration * ratio));
-  updateTime();
-});
+      player.$dispatcher.on('onStateChange', function (_, data) {
+        console.log('state:', data);
+      });
 
-$slider.on('change', function () {
-  player.$dispatcher.trigger('update');
-  player.seekTo(new Date(epochDate.valueOf() + (recentDate.valueOf() - epochDate.valueOf()) * ratio));
-});
+      _Earth2.default.init();
+      _Earth2.default.animate();
+    }
+  }, {
+    key: 'formatDate',
+    value: function formatDate(date) {
+      var ret = date.getUTCFullYear() + '年' + (date.getUTCMonth() + 1) + '月' + date.getUTCDate() + '日 ' + ('00' + date.getUTCHours()).slice(-2) + ':' + ('00' + date.getUTCMinutes()).slice(-2) + ':' + ('00' + date.getUTCSeconds()).slice(-2);
+      return ret;
+    }
+  }, {
+    key: 'updateTime',
+    value: function updateTime() {
+      var _this2 = this;
 
-$btnPlay.on('click', function () {
-  var $this = $(this);
+      var curDate = this.player.getCurrentTime();
 
-  if ($this.hasClass('pause')) {
-    $this.removeClass('pause');
-    player.playVideo();
-  } else {
-    $this.addClass('pause');
-    player.pauseVideo();
-  }
-});
+      this.ratio = (curDate.valueOf() - this.player.startDate.valueOf()) / this.player.duration;
 
-$btnGotohead.on('click', function () {
-  player.seekTo(epochDate);
-  $slider.val(0);
-});
+      this.$time.text(this.formatDate(curDate));
+      this.$timeCur.text(this.formatDate(curDate));
 
-player = new _Player2.default({
-  start_date: epochDate,
-  end_date: recentDate,
-  $btn_play: $btnPlay,
-  $slider: $slider
-});
+      if (this.player.getPlayerState() === this.player.PlayerState.PLAYING) {
+        this.$slider.val(this.ratio);
+      }
 
-player.playVideo();
+      requestAnimationFrame(function () {
+        _this2.updateTime();
+      });
+    }
+  }]);
 
-player.$dispatcher.on('onStateChange', function (_, data) {
-  console.log('state:', data);
-});
+  return Main;
+}();
 
-_Earth2.default.init();
-_Earth2.default.animate();
+window.licker = window.licker || {};
+(function (ns) {
+  ns.main = new Main();
+})(window.licker);
 
 },{"./Earth":8,"./Player":9,"jpeg-js":5}]},{},[10]);

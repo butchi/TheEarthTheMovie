@@ -2,85 +2,100 @@ import Player from './Player';
 import Earth from './Earth';
 import Jpeg from 'jpeg-js';
 
-console.log(Jpeg.encode);
+class Main {
+  constructor(opts = {}) {
+    this.recentDate = new Date(2016, 3, 30, 13 + 9, 4, 33);
+    this.epochDate = new Date(-62135596800000); // 西暦1年1月1日0時0分0秒
+    // var epochDate = new Date(2016, 3, 30, 13 + 9, 4, 20);
+    this.$slider = $('.slider');
+    this.$time = $('.face .time time');
+    this.$timeCur = $('.controller .time-cur');
+    this.$timeTotal = $('.controller .time-total');
+    this.$btnGotohead = $('.controller .btn-gotohead');
+    this.$btnPlay = $('.controller .btn-play');
 
-var recentDate = new Date(2016, 3, 30, 13 + 9, 4, 33);
-var epochDate = new Date(-62135596800000); // 西暦1年1月1日0時0分0秒
-// var epochDate = new Date(2016, 3, 30, 13 + 9, 4, 20);
-var player;
-var $slider = $('.slider');
-var $time = $('.face .time time');
-var $timeCur = $('.controller .time-cur');
-var $timeTotal = $('.controller .time-total');
-var $btnGotohead = $('.controller .btn-gotohead');
-var $btnPlay = $('.controller .btn-play');
-var ratio;
-var timerId;
+    requestAnimationFrame(() => {
+      this.updateTime();
+    });
 
-function formatDate(date) {
-  var ret = `${date.getUTCFullYear()}年${date.getUTCMonth() + 1}月${date.getUTCDate()}日 ${('00' + (date.getUTCHours())).slice(-2)}:${('00' + (date.getUTCMinutes())).slice(-2)}:${('00' + (date.getUTCSeconds())).slice(-2)}`;
-  return ret;
-}
+    this.$timeTotal.text(this.formatDate(this.recentDate));
 
-function updateTime() {
-  var curDate = player.getCurrentTime();
+    this.$slider.on('input', () => {
+      this.ratio = $(this).val();
+      // player.pauseVideo();
+      this.player.seekTo(new Date(player.startDate.valueOf() + this.player.duration * this.ratio));
+      this.updateTime();
+    });
 
-  ratio = (curDate.valueOf() - player.startDate.valueOf()) / player.duration;
+    this.$slider.on('change', () => {
+      this.player.$dispatcher.trigger('update');
+      this.player.seekTo(new Date(epochDate.valueOf() + (recentDate.valueOf() - epochDate.valueOf()) * this.ratio));
+    });
 
-  $time.text(formatDate(curDate));
-  $timeCur.text(formatDate(curDate));
+    this.$btnPlay.on('click', () => {
+      var $this = $(this);
 
-  if(player.getPlayerState() === player.PlayerState.PLAYING) {
-    $slider.val(ratio);
+      if($this.hasClass('pause')) {
+        $this.removeClass('pause');
+        this.player.playVideo();
+      } else {
+        $this.addClass('pause');
+        this.player.pauseVideo();
+      }
+    });
+
+    this.$btnGotohead.on('click', () => {
+      this.player.seekTo(epochDate);
+      $slider.val(0);
+    });
+
+    this.initialize();
   }
 
-  requestAnimationFrame(updateTime);
-}
-requestAnimationFrame(updateTime);
+  initialize() {
+    var player = new Player({
+      start_date: this.epochDate,
+      end_date: this.recentDate,
+      $btn_play: this.$btnPlay,
+      $slider: this.$slider,
+    });
+    this.player = player;
 
-$timeTotal.text(formatDate(recentDate));
-
-$slider.on('input', function() {
-  var ratio = $(this).val();
-  // player.pauseVideo();
-  player.seekTo(new Date(player.startDate.valueOf() + player.duration * ratio));
-  updateTime();
-});
-
-$slider.on('change', function() {
-  player.$dispatcher.trigger('update');
-  player.seekTo(new Date(epochDate.valueOf() + (recentDate.valueOf() - epochDate.valueOf()) * ratio));
-});
-
-$btnPlay.on('click', function() {
-  var $this = $(this);
-
-  if($this.hasClass('pause')) {
-    $this.removeClass('pause');
     player.playVideo();
-  } else {
-    $this.addClass('pause');
-    player.pauseVideo();
+
+    player.$dispatcher.on('onStateChange', (_, data) => {
+      console.log('state:', data);
+    });
+
+    Earth.init();
+    Earth.animate();
   }
-});
 
-$btnGotohead.on('click', function() {
-  player.seekTo(epochDate);
-  $slider.val(0);
-});
+  formatDate(date) {
+    var ret = `${date.getUTCFullYear()}年${date.getUTCMonth() + 1}月${date.getUTCDate()}日 ${('00' + (date.getUTCHours())).slice(-2)}:${('00' + (date.getUTCMinutes())).slice(-2)}:${('00' + (date.getUTCSeconds())).slice(-2)}`;
+    return ret;
+  }
 
-player = new Player({
-  start_date: epochDate,
-  end_date: recentDate,
-  $btn_play: $btnPlay,
-  $slider: $slider,
-});
+  updateTime() {
+    var curDate = this.player.getCurrentTime();
 
-player.playVideo();
+    this.ratio = (curDate.valueOf() - this.player.startDate.valueOf()) / this.player.duration;
 
-player.$dispatcher.on('onStateChange', function(_, data) {
-  console.log('state:', data);
-});
+    this.$time.text(this.formatDate(curDate));
+    this.$timeCur.text(this.formatDate(curDate));
 
-Earth.init();
-Earth.animate();
+    if(this.player.getPlayerState() === this.player.PlayerState.PLAYING) {
+      this.$slider.val(this.ratio);
+    }
+
+    requestAnimationFrame(() => {
+      this.updateTime();
+    });
+  }
+
+}
+
+window.licker = window.licker || {};
+((ns) => {
+  ns.main = new Main();
+})(window.licker);
