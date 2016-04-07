@@ -3693,20 +3693,20 @@ var Main = function () {
 
       _this.$timeTotal.text(_this.formatDate(_this.recentDate));
 
-      _this.$slider.on('input', function () {
-        _this.ratio = $(_this).val();
+      _this.$slider.on('input', function (evt) {
+        _this.ratio = $(evt.target).val();
         // player.pauseVideo();
-        _this.player.seekTo(new Date(player.startDate.valueOf() + _this.player.duration * _this.ratio));
+        _this.player.seekTo(new Date(_this.player.startDate.valueOf() + _this.player.duration * _this.ratio));
         _this.updateTime();
       });
 
       _this.$slider.on('change', function () {
         _this.player.$dispatcher.trigger('update');
-        _this.player.seekTo(new Date(epochDate.valueOf() + (recentDate.valueOf() - epochDate.valueOf()) * _this.ratio));
+        _this.player.seekTo(new Date(_this.epochDate.valueOf() + (recentDate.valueOf() - epochDate.valueOf()) * _this.ratio));
       });
 
-      _this.$btnPlay.on('click', function () {
-        var $this = $(_this);
+      _this.$btnPlay.on('click', function (evt) {
+        var $this = $(evt.target);
 
         if ($this.hasClass('pause')) {
           $this.removeClass('pause');

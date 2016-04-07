@@ -21,20 +21,20 @@ class Main {
 
       this.$timeTotal.text(this.formatDate(this.recentDate));
 
-      this.$slider.on('input', () => {
-        this.ratio = $(this).val();
+      this.$slider.on('input', (evt) => {
+        this.ratio = $(evt.target).val();
         // player.pauseVideo();
-        this.player.seekTo(new Date(player.startDate.valueOf() + this.player.duration * this.ratio));
+        this.player.seekTo(new Date(this.player.startDate.valueOf() + this.player.duration * this.ratio));
         this.updateTime();
       });
 
       this.$slider.on('change', () => {
         this.player.$dispatcher.trigger('update');
-        this.player.seekTo(new Date(epochDate.valueOf() + (recentDate.valueOf() - epochDate.valueOf()) * this.ratio));
+        this.player.seekTo(new Date(this.epochDate.valueOf() + (recentDate.valueOf() - epochDate.valueOf()) * this.ratio));
       });
 
-      this.$btnPlay.on('click', () => {
-        var $this = $(this);
+      this.$btnPlay.on('click', (evt) => {
+        var $this = $(evt.target);
 
         if($this.hasClass('pause')) {
           $this.removeClass('pause');
