@@ -113,48 +113,42 @@ button[disabled]:hover {
   height: 30px;
   color: #fff;
   background-color: #333; }
-
-.controller .time {
-  display: inline-block;
-  width: 280px;
-  font-size: 9px;
-  text-align: center; }
-
-.controller .btn-gotohead {
-  width: 30px;
-  height: 30px;
-  background-image: url(../img/gotohead.svg);
-  background-repeat: no-repeat;
-  background-position: 50% 35%;
-  background-size: 40px;
-  text-indent: -9999px; }
-
-.controller .btn-play {
-  width: 30px;
-  height: 30px;
-  background-image: url(../img/pause.svg);
-  background-repeat: no-repeat;
-  background-position: 50% 35%;
-  background-size: 40px;
-  text-indent: -9999px; }
-
-.controller .btn-play.pause {
-  background-image: url(../img/play.svg); }
-
-.controller .btn-sound {
-  width: 30px;
-  height: 30px;
-  background-image: url(../img/sound_on.svg);
-  background-repeat: no-repeat;
-  background-position: 50% 35%;
-  background-size: 40px;
-  text-indent: -9999px; }
-
-.controller .btn-setting {
-  width: 30px;
-  height: 30px;
-  background-image: url(../img/setting.svg);
-  background-repeat: no-repeat;
-  background-position: 50% 35%;
-  background-size: 40px;
-  text-indent: -9999px; }
+  .controller .time {
+    display: inline-block;
+    width: 280px;
+    font-size: 9px;
+    text-align: center; }
+  .controller .btn-gotohead {
+    width: 30px;
+    height: 30px;
+    background-image: url(../img/gotohead.svg);
+    background-repeat: no-repeat;
+    background-position: 50% 35%;
+    background-size: 40px;
+    text-indent: -9999px; }
+  .controller .btn-play {
+    width: 30px;
+    height: 30px;
+    background-image: url(../img/pause.svg);
+    background-repeat: no-repeat;
+    background-position: 50% 35%;
+    background-size: 40px;
+    text-indent: -9999px; }
+  .controller .btn-play.pause {
+    background-image: url(../img/play.svg); }
+  .controller .btn-sound {
+    width: 30px;
+    height: 30px;
+    background-image: url(../img/sound_on.svg);
+    background-repeat: no-repeat;
+    background-position: 50% 35%;
+    background-size: 40px;
+    text-indent: -9999px; }
+  .controller .btn-setting {
+    width: 30px;
+    height: 30px;
+    background-image: url(../img/setting.svg);
+    background-repeat: no-repeat;
+    background-position: 50% 35%;
+    background-size: 40px;
+    text-indent: -9999px; }

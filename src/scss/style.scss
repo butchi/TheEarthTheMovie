@@ -97,9 +97,8 @@ button {
 
   color: #fff;
   background-color: #333;
-  }
 
-  .controller .time {
+  .time {
     display: inline-block;
     width: 280px;
     font-size: 9px;
@@ -107,7 +106,7 @@ button {
     text-align: center;
   }
 
-  .controller .btn-gotohead {
+  .btn-gotohead {
     width: 30px;
     height: 30px;
     background-image: url(../img/gotohead.svg);
@@ -117,7 +116,7 @@ button {
 
     text-indent: -9999px;
   }
-  .controller .btn-play {
+  .btn-play {
     width: 30px;
     height: 30px;
     background-image: url(../img/pause.svg);
@@ -127,10 +126,10 @@ button {
 
     text-indent: -9999px;
   }
-  .controller .btn-play.pause {
+  .btn-play.pause {
     background-image: url(../img/play.svg);
   }
-  .controller .btn-sound {
+  .btn-sound {
     width: 30px;
     height: 30px;
     background-image: url(../img/sound_on.svg);
@@ -140,9 +139,9 @@ button {
 
     text-indent: -9999px;
   }
-  .controller .btn-sound.off {
+  .btn-sound.off {
   }
-  .controller .btn-setting {
+  .btn-setting {
     width: 30px;
     height: 30px;
     background-image: url(../img/setting.svg);
@@ -152,3 +151,4 @@ button {
 
     text-indent: -9999px;
   }
+}
