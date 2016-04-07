@@ -3659,52 +3659,54 @@ var Main = function () {
 
     _classCallCheck(this, Main);
 
-    this.recentDate = new Date(2016, 3, 30, 13 + 9, 4, 33);
-    this.epochDate = new Date(-62135596800000); // 西暦1年1月1日0時0分0秒
-    // var epochDate = new Date(2016, 3, 30, 13 + 9, 4, 20);
-    this.$slider = $('.slider');
-    this.$time = $('.face .time time');
-    this.$timeCur = $('.controller .time-cur');
-    this.$timeTotal = $('.controller .time-total');
-    this.$btnGotohead = $('.controller .btn-gotohead');
-    this.$btnPlay = $('.controller .btn-play');
+    $(function () {
+      _this.recentDate = new Date(2016, 3, 30, 13 + 9, 4, 33);
+      _this.epochDate = new Date(-62135596800000); // 西暦1年1月1日0時0分0秒
+      // var epochDate = new Date(2016, 3, 30, 13 + 9, 4, 20);
+      _this.$slider = $('.slider');
+      _this.$time = $('.face .time time');
+      _this.$timeCur = $('.controller .time-cur');
+      _this.$timeTotal = $('.controller .time-total');
+      _this.$btnGotohead = $('.controller .btn-gotohead');
+      _this.$btnPlay = $('.controller .btn-play');
 
-    requestAnimationFrame(function () {
-      _this.updateTime();
+      requestAnimationFrame(function () {
+        _this.updateTime();
+      });
+
+      _this.$timeTotal.text(_this.formatDate(_this.recentDate));
+
+      _this.$slider.on('input', function () {
+        _this.ratio = $(_this).val();
+        // player.pauseVideo();
+        _this.player.seekTo(new Date(player.startDate.valueOf() + _this.player.duration * _this.ratio));
+        _this.updateTime();
+      });
+
+      _this.$slider.on('change', function () {
+        _this.player.$dispatcher.trigger('update');
+        _this.player.seekTo(new Date(epochDate.valueOf() + (recentDate.valueOf() - epochDate.valueOf()) * _this.ratio));
+      });
+
+      _this.$btnPlay.on('click', function () {
+        var $this = $(_this);
+
+        if ($this.hasClass('pause')) {
+          $this.removeClass('pause');
+          _this.player.playVideo();
+        } else {
+          $this.addClass('pause');
+          _this.player.pauseVideo();
+        }
+      });
+
+      _this.$btnGotohead.on('click', function () {
+        _this.player.seekTo(epochDate);
+        $slider.val(0);
+      });
+
+      _this.initialize();
     });
-
-    this.$timeTotal.text(this.formatDate(this.recentDate));
-
-    this.$slider.on('input', function () {
-      _this.ratio = $(_this).val();
-      // player.pauseVideo();
-      _this.player.seekTo(new Date(player.startDate.valueOf() + _this.player.duration * _this.ratio));
-      _this.updateTime();
-    });
-
-    this.$slider.on('change', function () {
-      _this.player.$dispatcher.trigger('update');
-      _this.player.seekTo(new Date(epochDate.valueOf() + (recentDate.valueOf() - epochDate.valueOf()) * _this.ratio));
-    });
-
-    this.$btnPlay.on('click', function () {
-      var $this = $(_this);
-
-      if ($this.hasClass('pause')) {
-        $this.removeClass('pause');
-        _this.player.playVideo();
-      } else {
-        $this.addClass('pause');
-        _this.player.pauseVideo();
-      }
-    });
-
-    this.$btnGotohead.on('click', function () {
-      _this.player.seekTo(epochDate);
-      $slider.val(0);
-    });
-
-    this.initialize();
   }
 
   _createClass(Main, [{
