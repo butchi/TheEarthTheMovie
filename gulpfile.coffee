@@ -50,7 +50,7 @@ gulp.task 'sass', () ->
 gulp.task 'css', gulp.series('sass')
 
 gulp.task 'copy-bower', () -> 
-  return gulp.src ['jquery/dist/jquery.min.js', 'lodash/dist/lodash.min.js'],
+  return gulp.src ['jquery/dist/jquery.min.js', 'lodash/dist/lodash.min.js', 'three.js/build/three.min.js'],
     cwd: 'bower_components',
   .pipe(gulp.dest "#{DEST}/js/lib")
 
