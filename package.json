@@ -33,6 +33,7 @@
     "gulp-sass": "^2.2.0",
     "gulp-uglify": "^1.5.1",
     "gulp-webserver": "^0.9.1",
+    "jpeg-js": "^0.1.1",
     "vinyl-source-stream": "^1.1.0"
   },
   "babel": {
