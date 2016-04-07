@@ -6,9 +6,17 @@ var mouseX = 0, mouseY = 0;
 var WIDTH = 640;
 var HEIGHT = 350;
 
-export default {
-  init: init,
-  animate: animate,
+export default class Earth {
+  constructor() {
+  }
+
+  init() {
+    init();
+  }
+
+  animate() {
+    animate();
+  }
 }
 
 function init() {

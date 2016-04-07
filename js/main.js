@@ -3437,6 +3437,11 @@ function getImageDataFromImage(idOrElement){
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
 var container, stats;
 var camera, scene, renderer;
 var group;
@@ -3446,13 +3451,30 @@ var mouseX = 0,
 var WIDTH = 640;
 var HEIGHT = 350;
 
-exports.default = {
-  init: init,
-  animate: animate
-};
+var Earth = function () {
+  function Earth() {
+    _classCallCheck(this, Earth);
+  }
+
+  _createClass(Earth, [{
+    key: 'init',
+    value: function init() {
+      _init();
+    }
+  }, {
+    key: 'animate',
+    value: function animate() {
+      _animate();
+    }
+  }]);
+
+  return Earth;
+}();
+
+exports.default = Earth;
 
 
-function init() {
+function _init() {
 
   container = document.getElementById('container');
 
@@ -3506,9 +3528,9 @@ function init() {
   container.appendChild(stats.domElement);
 }
 
-function animate() {
+function _animate() {
 
-  requestAnimationFrame(animate);
+  requestAnimationFrame(_animate);
 
   render();
   stats.update();
@@ -3726,8 +3748,9 @@ var Main = function () {
         console.log('state:', data);
       });
 
-      _Earth2.default.init();
-      _Earth2.default.animate();
+      this.earth = new _Earth2.default();
+      this.earth.init();
+      this.earth.animate();
     }
   }, {
     key: 'formatDate',

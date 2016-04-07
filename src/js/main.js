@@ -69,8 +69,9 @@ class Main {
       console.log('state:', data);
     });
 
-    Earth.init();
-    Earth.animate();
+    this.earth = new Earth();
+    this.earth.init();
+    this.earth.animate();
   }
 
   formatDate(date) {
