@@ -1,6 +1,4 @@
-'use strict';
-
-class Player {
+export default class Player {
   constructor(opts) {
     this.startDate = opts.start_date || new Date(-62135596800000);;
     this.endDate = opts.end_date || new Date();
@@ -30,7 +28,7 @@ class Player {
     this._state = this.PlayerState.PLAYING;
     this.triggerStateChange();
 
-    timerId = setInterval(() => {
+    this.timerId = setInterval(() => {
       if(this.curDate.valueOf() >= this.endDate.valueOf()) {
         this.stopVideo();
       }
@@ -39,13 +37,13 @@ class Player {
   }
 
   pauseVideo() {
-    clearInterval(timerId);
+    clearInterval(this.timerId);
     this._state = this.PlayerState.PAUSED;
     this.triggerStateChange();
   }
 
   stopVideo() {
-    clearInterval(timerId);
+    clearInterval(this.timerId);
     this._state = this.PlayerState.ENDED;
     this.triggerStateChange();
     this.$btnPlay.addClass('pause');

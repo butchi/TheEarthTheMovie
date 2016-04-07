@@ -1,18 +1,26 @@
 doctype html
-html(lang='ja')
+html(lang='en')
   head
     meta(charset='UTF-8')
-    title page
+    title The Earth The Movie
     link(rel='stylesheet', href='css/style.css')
   body
     .wrapper
-      header
-        h1(data-heading-level='1')
-          | Page
       main
-        p
-          | Thanks, world!
-
+        .face
+          .earth
+          .time
+            time
+        .controller
+          button.btn-gotohead Go to head
+          button.btn-play Play / Pause
+          button.btn-sound(disabled='') Sound on / off
+          span.time
+            time.time-cur
+            |       /
+            time.time-total
+          input.slider(type='range', min='0', max='1', step='0.00001', value='0')
+          button.btn-setting(disabled='') Setting
     script(src='js/lib/jquery.min.js')
     script(src='js/lib/lodash.min.js')
     script(src='js/main.js')

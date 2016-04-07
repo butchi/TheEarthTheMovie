@@ -1,4 +1,4 @@
-'use strict';
+import Player from './Player';
 
 var recentDate = new Date(2016, 3, 30, 13 + 9, 4, 33);
 var epochDate = new Date(-62135596800000); // 西暦1年1月1日0時0分0秒
