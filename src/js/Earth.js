@@ -25,7 +25,7 @@ export default class Earth {
     // earth
 
     var loader = new THREE.TextureLoader();
-    loader.load( '/img/land_ocean_ice_cloud_2048.jpg', function ( texture ) {
+    loader.load( 'img/land_ocean_ice_cloud_2048.jpg', function ( texture ) {
 
       var geometry = new THREE.SphereGeometry( 200, 20, 20 );
 
