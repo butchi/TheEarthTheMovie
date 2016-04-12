@@ -3760,7 +3760,7 @@ var Main = function () {
 
       _this.$slider.on('change', function () {
         _this.player.$dispatcher.trigger('update');
-        _this.player.seekTo(new Date(_this.epochDate.valueOf() + (recentDate.valueOf() - epochDate.valueOf()) * _this.ratio));
+        _this.player.seekTo(new Date(_this.epochDate.valueOf() + (_this.recentDate.valueOf() - _this.epochDate.valueOf()) * _this.ratio));
       });
 
       _this.$btnPlay.on('click', function (evt) {

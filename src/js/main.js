@@ -30,7 +30,7 @@ class Main {
 
       this.$slider.on('change', () => {
         this.player.$dispatcher.trigger('update');
-        this.player.seekTo(new Date(this.epochDate.valueOf() + (recentDate.valueOf() - epochDate.valueOf()) * this.ratio));
+        this.player.seekTo(new Date(this.epochDate.valueOf() + (this.recentDate.valueOf() - this.epochDate.valueOf()) * this.ratio));
       });
 
       this.$btnPlay.on('click', (evt) => {
