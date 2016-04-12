@@ -3551,6 +3551,64 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+var _jpegJs = require('jpeg-js');
+
+var _jpegJs2 = _interopRequireDefault(_jpegJs);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var WIDTH = 640;
+var HEIGHT = 350;
+
+var Movie = function () {
+  function Movie() {
+    _classCallCheck(this, Movie);
+  }
+
+  _createClass(Movie, [{
+    key: 'render',
+    value: function render() {
+      var canvas = $('.movie canvas').get(0);
+      canvas.width = WIDTH;
+      canvas.height = HEIGHT;
+      var ctx = canvas.getContext('2d');
+
+      var canvasEarth = document.querySelector('#container canvas');
+
+      var ctxEarth = canvasEarth.getContext('2d');
+
+      var imgData = ctx.createImageData(WIDTH, HEIGHT);
+      var data = imgData.data;
+
+      var rawImageData = ctxEarth.getImageData(0, 0, WIDTH, HEIGHT);
+
+      var jpegImageData = _jpegJs2.default.decode(_jpegJs2.default.encode(rawImageData, 20).data);
+
+      // copy img byte-per-byte into our ImageData
+      for (var i = 0, len = WIDTH * HEIGHT * 4; i < len; i++) {
+        data[i] = jpegImageData.data[i];
+      }
+
+      ctx.putImageData(imgData, 0, 0);
+    }
+  }]);
+
+  return Movie;
+}();
+
+exports.default = Movie;
+
+},{"jpeg-js":5}],10:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var Player = function () {
@@ -3647,7 +3705,7 @@ var Player = function () {
 
 exports.default = Player;
 
-},{}],10:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -3660,9 +3718,9 @@ var _Earth = require('./Earth');
 
 var _Earth2 = _interopRequireDefault(_Earth);
 
-var _jpegJs = require('jpeg-js');
+var _Movie = require('./Movie');
 
-var _jpegJs2 = _interopRequireDefault(_jpegJs);
+var _Movie2 = _interopRequireDefault(_Movie);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -3746,6 +3804,7 @@ var Main = function () {
       this.earth = new _Earth2.default();
       this.earth.init();
       this.earth.animate();
+      this.movie = new _Movie2.default();
     }
   }, {
     key: 'formatDate',
@@ -3769,6 +3828,8 @@ var Main = function () {
         this.$slider.val(this.ratio);
       }
 
+      this.movie.render();
+
       requestAnimationFrame(function () {
         _this2.updateTime();
       });
@@ -3783,4 +3844,4 @@ window.licker = window.licker || {};
   ns.main = new Main();
 })(window.licker);
 
-},{"./Earth":8,"./Player":9,"jpeg-js":5}]},{},[10]);
+},{"./Earth":8,"./Movie":9,"./Player":10}]},{},[11]);

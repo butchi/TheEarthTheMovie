@@ -1,6 +1,6 @@
 import Player from './Player';
 import Earth from './Earth';
-import Jpeg from 'jpeg-js';
+import Movie from './Movie';
 
 class Main {
   constructor(opts = {}) {
@@ -72,6 +72,7 @@ class Main {
     this.earth = new Earth();
     this.earth.init();
     this.earth.animate();
+    this.movie = new Movie();
   }
 
   formatDate(date) {
@@ -90,6 +91,8 @@ class Main {
     if(this.player.getPlayerState() === this.player.PlayerState.PLAYING) {
       this.$slider.val(this.ratio);
     }
+
+    this.movie.render();
 
     requestAnimationFrame(() => {
       this.updateTime();
