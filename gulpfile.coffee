@@ -19,7 +19,7 @@ DEST = '.'
 
 # html
 gulp.task 'jade', () ->
-  return gulp.src("#{SRC}/jade/*.jade")
+  return gulp.src("#{SRC}/jade/**/*.jade")
     .pipe jade
       # locals: locals,
       pretty: true,
