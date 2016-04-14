@@ -1,5 +1,9 @@
 @import "reset";
 
+.bg-site > .the-earth-the-movie__site-body {
+  @import "bg-site/com__youtube/*";
+}
+
 * {
   box-sizing: border-box;
 }

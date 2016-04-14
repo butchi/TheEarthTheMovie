@@ -7,6 +7,7 @@ html(lang='en')
   body
     .wrapper
       main
+        .bg-site
         .face
           //- .earth
           .three
@@ -24,6 +25,8 @@ html(lang='en')
             time.time-total
           input.slider(type='range', min='0', max='1', step='0.00001', value='0')
           button.btn-setting(disabled='') Setting
+
+    include ./template/com__youtube
     script(src='js/lib/jquery.min.js')
     script(src='js/lib/lodash.min.js')
     script(src='js/lib/three.min.js')
