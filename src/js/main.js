@@ -74,7 +74,7 @@ class Main {
     this.earth.animate();
     this.movie = new Movie();
 
-    var html = $('.template--com__youtube').text();
+    var html = $('.template--jp__co__yahoo__headlines').text();
     $('.bg-site').html(html);
   }
 
