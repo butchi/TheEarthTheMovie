@@ -8,12 +8,13 @@ export default class Movie {
   }
 
   render() {
-    var canvas = $('.movie canvas').get(0);
+    const $stage = $('main > .face');
+    var canvas = $stage.find('.movie canvas').get(0);
     canvas.width = WIDTH;
     canvas.height = HEIGHT;
     var ctx = canvas.getContext('2d');
 
-    var canvasEarth = document.querySelector('#container canvas');
+    var canvasEarth = $stage.find('.three canvas').get(0);
 
     var ctxEarth = canvasEarth.getContext('2d');
 

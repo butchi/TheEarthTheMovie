@@ -12,7 +12,9 @@ export default class Earth {
 
   init() {
 
-    container = document.getElementById( 'container' );
+    const $stage = $('main > .face');
+
+    container = $stage.find('.three').get(0);
 
     camera = new THREE.PerspectiveCamera( 60, WIDTH / HEIGHT, 1, 2000 );
     camera.position.z = 500;
