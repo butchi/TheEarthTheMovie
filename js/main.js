@@ -3809,7 +3809,7 @@ var Main = function () {
       this.earth.animate();
       this.movie = new _Movie2.default();
 
-      var html = $('.template--com__youtube').text();
+      var html = $('.template--jp__co__yahoo__headlines').text();
       $('.bg-site').html(html);
     }
   }, {
