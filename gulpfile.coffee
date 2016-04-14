@@ -3,6 +3,7 @@
 gulp = require 'gulp'
 source = require 'vinyl-source-stream'
 sass = require 'gulp-sass'
+bulkSass = require 'gulp-sass-bulk-import'
 pleeease = require 'gulp-pleeease'
 browserify = require 'browserify'
 babelify = require 'babelify'
@@ -28,6 +29,7 @@ gulp.task 'html', gulp.series('jade')
 
 gulp.task 'sass', () ->
   gulp.src "#{SRC}/scss/style.scss"
+    .pipe do bulkSass
     .pipe do sass
     .pipe pleeease {
       autoprefixer: {
