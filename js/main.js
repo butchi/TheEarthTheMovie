@@ -3460,7 +3460,9 @@ var Earth = function () {
     key: 'init',
     value: function init() {
 
-      container = document.getElementById('container');
+      var $stage = $('main > .face');
+
+      container = $stage.find('.three').get(0);
 
       camera = new THREE.PerspectiveCamera(60, WIDTH / HEIGHT, 1, 2000);
       camera.position.z = 500;
@@ -3570,12 +3572,13 @@ var Movie = function () {
   _createClass(Movie, [{
     key: 'render',
     value: function render() {
-      var canvas = $('.movie canvas').get(0);
+      var $stage = $('main > .face');
+      var canvas = $stage.find('.movie canvas').get(0);
       canvas.width = WIDTH;
       canvas.height = HEIGHT;
       var ctx = canvas.getContext('2d');
 
-      var canvasEarth = document.querySelector('#container canvas');
+      var canvasEarth = $stage.find('.three canvas').get(0);
 
       var ctxEarth = canvasEarth.getContext('2d');
 
@@ -3805,6 +3808,9 @@ var Main = function () {
       this.earth.init();
       this.earth.animate();
       this.movie = new _Movie2.default();
+
+      var html = $('.template--com__youtube').text();
+      $('.bg-site').html(html);
     }
   }, {
     key: 'formatDate',

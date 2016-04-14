@@ -73,6 +73,9 @@ class Main {
     this.earth.init();
     this.earth.animate();
     this.movie = new Movie();
+
+    var html = $('.template--com__youtube').text();
+    $('.bg-site').html(html);
   }
 
   formatDate(date) {
