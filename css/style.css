@@ -30705,13 +30705,20 @@ button:hover {
 button[disabled]:hover {
   cursor: default; }
 
+.bg-site {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: -1; }
+
 .face {
   position: absolute;
   left: 0;
   top: 0;
   width: 640px;
   height: 350px;
-  background-color: #000; }
+  background-color: #000;
+  z-index: 0; }
 
 .three, .movie {
   position: absolute;
