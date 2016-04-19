@@ -1,3 +1,10 @@
+
+@import "http://www.asahicom.jp/css/asahi-base2013.utf8.css";
+@import "http://www.asahicom.jp/css/asahi-site2013.utf8.css";
+@import "http://www.asahicom.jp/css/asahi-header2014.utf8.css";
+@import "http://www.asahicom.jp/css/asahi-footer2013.utf8.css";
+@import "http://www.asahicom.jp/css/smartlink.utf8.css";
+
 @charset "UTF-8";
 /* http://meyerweb.com/eric/tools/css/reset/
    v2.0 | 20110126
@@ -49252,6 +49259,53 @@ a.siteHeaderNicopoPurchase:hover {
   position: absolute;
   left: 50%;
   z-index: 4; }
+
+.bg-site > .the-earth-the-movie__site-body.com__asahi__www {
+  /*-----------------------------------
+朝日新聞デジタル　--　Common CSS　--
+
+last modified --2014-02-24--
+-----------------------------------*/
+  /* 基本スタイル・汎用クラス */
+  /* サイトスタイル */
+  /* スマホ・タブレット向けアプリ誘導 */
+  /* 非ログイン-ログイン履歴なし　CSS
+update 2014-09-22
+==================== */ }
+  .bg-site > .the-earth-the-movie__site-body.com__asahi__www .Member,
+  .bg-site > .the-earth-the-movie__site-body.com__asahi__www .Lite,
+  .bg-site > .the-earth-the-movie__site-body.com__asahi__www .MemberOut,
+  .bg-site > .the-earth-the-movie__site-body.com__asahi__www .LiteOut,
+  .bg-site > .the-earth-the-movie__site-body.com__asahi__www .OutRegi {
+    display: none !important; }
+  .bg-site > .the-earth-the-movie__site-body.com__asahi__www .Guest,
+  .bg-site > .the-earth-the-movie__site-body.com__asahi__www .Logout,
+  .bg-site > .the-earth-the-movie__site-body.com__asahi__www .NonRegi {
+    display: block !important; }
+  .bg-site > .the-earth-the-movie__site-body.com__asahi__www .Member_inline,
+  .bg-site > .the-earth-the-movie__site-body.com__asahi__www .Lite_inline,
+  .bg-site > .the-earth-the-movie__site-body.com__asahi__www .MemberOut_inline,
+  .bg-site > .the-earth-the-movie__site-body.com__asahi__www .LiteOut_inline,
+  .bg-site > .the-earth-the-movie__site-body.com__asahi__www .OutRegi_inline {
+    display: none !important; }
+  .bg-site > .the-earth-the-movie__site-body.com__asahi__www .Guest_inline,
+  .bg-site > .the-earth-the-movie__site-body.com__asahi__www .Logout_inline,
+  .bg-site > .the-earth-the-movie__site-body.com__asahi__www .NonRegi_inline {
+    display: inline !important; }
+  .bg-site > .the-earth-the-movie__site-body.com__asahi__www .Member_inlineblock,
+  .bg-site > .the-earth-the-movie__site-body.com__asahi__www .Lite_inlineblock,
+  .bg-site > .the-earth-the-movie__site-body.com__asahi__www .MemberOut_inlineblock,
+  .bg-site > .the-earth-the-movie__site-body.com__asahi__www .LiteOut_inlineblock,
+  .bg-site > .the-earth-the-movie__site-body.com__asahi__www .OutRegi_inlineblock {
+    display: none !important; }
+  .bg-site > .the-earth-the-movie__site-body.com__asahi__www .Guest_inlineblock,
+  .bg-site > .the-earth-the-movie__site-body.com__asahi__www .Logout_inlineblock,
+  .bg-site > .the-earth-the-movie__site-body.com__asahi__www .NonRegi_inlineblock {
+    display: inline-block !important;
+    *display: inline !important;
+    *zoom: 1 !important; }
+  .bg-site > .the-earth-the-movie__site-body.com__asahi__www .Coupon {
+    display: none !important; }
 
 * {
   box-sizing: border-box; }

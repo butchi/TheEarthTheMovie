@@ -74,7 +74,7 @@ class Main {
     this.earth.animate();
     this.movie = new Movie();
 
-    var html = $('.template--jp__nicovideo__www').text();
+    var html = $('.template--com__asahi__www').text();
     $('.bg-site').html(html);
   }
 
