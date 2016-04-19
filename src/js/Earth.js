@@ -85,7 +85,7 @@ export default class Earth {
     camera.position.y += ( - mouseY - camera.position.y ) * 0.05;
     camera.lookAt( scene.position );
 
-    group.rotation.y -= 0.0005;
+    group.rotation.y -= 0.0001;
 
     renderer.render( scene, camera );
 
