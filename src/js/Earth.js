@@ -37,24 +37,6 @@ export default class Earth {
 
     } );
 
-    // shadow
-
-    var canvas = document.createElement( 'canvas' );
-    canvas.width = 128;
-    canvas.height = 128;
-
-    var context = canvas.getContext( '2d' );
-
-    var texture = new THREE.CanvasTexture( canvas );
-
-    var geometry = new THREE.PlaneBufferGeometry( 300, 300, 3, 3 );
-    var material = new THREE.MeshBasicMaterial( { map: texture, overdraw: 0.5 } );
-
-    var mesh = new THREE.Mesh( geometry, material );
-    mesh.position.y = - 250;
-    mesh.rotation.x = - Math.PI / 2;
-    group.add( mesh );
-
     renderer = new THREE.CanvasRenderer();
     renderer.setClearColor( 0x000000 );
     renderer.setPixelRatio( window.devicePixelRatio );
