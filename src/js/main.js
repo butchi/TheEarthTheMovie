@@ -78,16 +78,13 @@ class Main {
 
     this.siteBg = new SiteBg();
 
-    this.siteBg.pushBg(4);
-    this.siteBg.pushBg(4);
-    this.siteBg.popBg();
-    // this.siteBg.pushBg();
-    // this.siteBg.pushBg();
+    this.siteBg.pushBg();
+    this.siteBg.pushBg();
 
-    // setInterval(() => {
-    //   this.siteBg.popBg();
-    //   this.siteBg.pushBg();
-    // }, 15000);
+    setInterval(() => {
+      this.siteBg.popBg();
+      this.siteBg.pushBg();
+    }, 15000);
   }
 
   formatDate(date) {
