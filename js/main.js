@@ -3448,8 +3448,8 @@ var group;
 var mouseX = 0,
     mouseY = 0;
 
-var WIDTH = 640;
-var HEIGHT = 350;
+var WIDTH = 640 / 2;
+var HEIGHT = 350 / 2;
 
 var Earth = function () {
   function Earth() {
@@ -3483,24 +3483,6 @@ var Earth = function () {
         var mesh = new THREE.Mesh(geometry, material);
         group.add(mesh);
       });
-
-      // shadow
-
-      var canvas = document.createElement('canvas');
-      canvas.width = 128;
-      canvas.height = 128;
-
-      var context = canvas.getContext('2d');
-
-      var texture = new THREE.CanvasTexture(canvas);
-
-      var geometry = new THREE.PlaneBufferGeometry(300, 300, 3, 3);
-      var material = new THREE.MeshBasicMaterial({ map: texture, overdraw: 0.5 });
-
-      var mesh = new THREE.Mesh(geometry, material);
-      mesh.position.y = -250;
-      mesh.rotation.x = -Math.PI / 2;
-      group.add(mesh);
 
       renderer = new THREE.CanvasRenderer();
       renderer.setClearColor(0x000000);
@@ -3561,40 +3543,39 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var WIDTH = 640;
-var HEIGHT = 350;
-
 var Movie = function () {
   function Movie() {
     _classCallCheck(this, Movie);
+
+    this.$stage = $('main > .face');
+    this.canvas = this.$stage.find('.movie canvas').get(0);
+    this.ctx = this.canvas.getContext('2d');
+
+    this.canvasEarth = this.$stage.find('.three canvas').get(0);
+    this.ctxEarth = this.canvasEarth.getContext('2d');
   }
 
   _createClass(Movie, [{
     key: 'render',
     value: function render() {
-      var $stage = $('main > .face');
-      var canvas = $stage.find('.movie canvas').get(0);
-      canvas.width = WIDTH;
-      canvas.height = HEIGHT;
-      var ctx = canvas.getContext('2d');
+      var width = this.canvasEarth.width;
+      var height = this.canvasEarth.height;
+      this.canvas.width = width;
+      this.canvas.height = height;
 
-      var canvasEarth = $stage.find('.three canvas').get(0);
-
-      var ctxEarth = canvasEarth.getContext('2d');
-
-      var imgData = ctx.createImageData(WIDTH, HEIGHT);
+      var imgData = this.ctx.createImageData(width, height);
       var data = imgData.data;
 
-      var rawImageData = ctxEarth.getImageData(0, 0, WIDTH, HEIGHT);
+      var rawImageData = this.ctxEarth.getImageData(0, 0, width, height);
 
       var jpegImageData = _jpegJs2.default.decode(_jpegJs2.default.encode(rawImageData, 20).data);
 
       // copy img byte-per-byte into our ImageData
-      for (var i = 0, len = WIDTH * HEIGHT * 4; i < len; i++) {
+      for (var i = 0, len = width * height * 4; i < len; i++) {
         data[i] = jpegImageData.data[i];
       }
 
-      ctx.putImageData(imgData, 0, 0);
+      this.ctx.putImageData(imgData, 0, 0);
     }
   }]);
 
@@ -3725,6 +3706,10 @@ var _Movie = require('./Movie');
 
 var _Movie2 = _interopRequireDefault(_Movie);
 
+var _siteLi = require('./siteLi');
+
+var _siteLi2 = _interopRequireDefault(_siteLi);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -3809,8 +3794,47 @@ var Main = function () {
       this.earth.animate();
       this.movie = new _Movie2.default();
 
-      var html = $('.template--com__asahi__www').text();
-      $('.bg-site').html(html);
+      Object.keys(_siteLi2.default).forEach(function (name, i) {
+        var site = _siteLi2.default[name];
+        var rootPath = (site.url.match(/^([httpsfile]+:\/{2,3}[0-9a-z\.\-:]+?:?[0-9]*?\/)/i) || [])[1];
+        var parentPath = (site.url.match(/^(.+\/)/i) || [])[1];
+        var $iframe = $('<iframe width="' + site.width + '" height="' + site.height + '"></iframe>');
+        $iframe.addClass(name);
+        $iframe.attr('src', 'template/' + name + '.html');
+        $('.bg-site').append($iframe);
+        $iframe.on('load', function (evt) {
+          ['src', 'href'].forEach(function (ref) {
+            var $contents = $(evt.target).contents();
+            $(evt.target.document).ready(function () {
+              $contents.find('[srcset]').attr('srcset', ''); // できれば対応
+              $contents.find('[' + ref + ']').each(function (i, elm) {
+                var $elm = $(elm);
+                var path = $elm.attr(ref);
+
+                // httpとhttps
+                if (path.match(/^http.*:/i)) {
+                  return;
+                }
+
+                // // '//'で始まるパス
+                // if(path.match(/^\/\//i)) {
+                //   $elm.attr(ref, path.replace(/^\/\//, domain));
+                //   return;
+                // }
+
+                // '/'で始まるパス（サイトルート相対パス）
+                if (path.match(/^\//i)) {
+                  $elm.attr(ref, path.replace(/^\//, rootPath));
+                  return;
+                }
+
+                // 相対パス（'.'で始まる相対パス含む）
+                $elm.attr(ref, parentPath + path);
+              });
+            });
+          });
+        });
+      });
     }
   }, {
     key: 'formatDate',
@@ -3850,4 +3874,48 @@ window.licker = window.licker || {};
   ns.main = new Main();
 })(window.licker);
 
-},{"./Earth":8,"./Movie":9,"./Player":10}]},{},[11]);
+},{"./Earth":8,"./Movie":9,"./Player":10,"./siteLi":12}],12:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var siteLi = {
+  // 動画サイト
+  "com__youtube": {
+    url: "https://www.youtube.com/watch?v=_-1BeTJAbns",
+    width: 960,
+    height: 540
+  },
+  "jp__nicovideo": {
+    url: "http://www.nicovideo.jp/watch/sm1208573",
+    width: 960,
+    height: 540
+  },
+
+  // ニュースサイト
+  // "jp__co__yahoo__headlines": {
+  //   url: "http://headlines.yahoo.co.jp/hl?a=20160413-00010006-afpbbnewsv-int",
+  //   width: 960,
+  //   height: 540,
+  // },
+  "jp__or__nhk": {
+    url: "http://www3.nhk.or.jp/news/html/20160420/k10010489771000.html",
+    width: 960,
+    height: 540
+  },
+  "com__asahi": {
+    url: "http://www.asahi.com/articles/DA3S12308696.html",
+    width: 960,
+    height: 540
+  },
+  "net__gigazine": {
+    url: "http://gigazine.net/news/20160418-wow-signal-suspicious-comets/",
+    width: 960,
+    height: 540
+  }
+};
+
+exports.default = siteLi;
+
+},{}]},{},[11]);

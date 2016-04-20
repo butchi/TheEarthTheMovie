@@ -1,21 +1,6 @@
 @import "reset";
 
-.bg-site > .the-earth-the-movie__site-body {
-  &.com__youtube {
-    @import "bg-site/com__youtube/*";
-  }
-  &.jp__co__yahoo__headlines {
-    @import "bg-site/jp__co__yahoo__headlines/*";
-  }
-  &.jp__nicovideo__www {
-    @import "bg-site/jp__nicovideo__www/*";
-  }
-  &.net__gigazine {
-    @import "bg-site/net__gigazine/*";
-  }
-  &.com__asahi__www {
-    @import "bg-site/com__asahi__www/*";
-  }
+.bg-site {
 }
 
 * {

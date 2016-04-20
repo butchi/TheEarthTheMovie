@@ -1,6 +1,7 @@
 import Player from './Player';
 import Earth from './Earth';
 import Movie from './Movie';
+import siteLi from './siteLi';
 
 class Main {
   constructor(opts = {}) {
@@ -74,8 +75,47 @@ class Main {
     this.earth.animate();
     this.movie = new Movie();
 
-    var html = $('.template--com__asahi__www').text();
-    $('.bg-site').html(html);
+    Object.keys(siteLi).forEach((name, i) => {
+      var site = siteLi[name];
+      var rootPath = (site.url.match(/^([httpsfile]+:\/{2,3}[0-9a-z\.\-:]+?:?[0-9]*?\/)/i) || [])[1];
+      var parentPath = (site.url.match(/^(.+\/)/i) || [])[1];
+      var $iframe = $(`<iframe width="${site.width}" height="${site.height}"></iframe>`);
+      $iframe.addClass(name);
+      $iframe.attr('src', `template/${name}.html`);
+      $('.bg-site').append($iframe);
+      $iframe.on('load', (evt) => {
+        ['src', 'href'].forEach((ref) => {
+          var $contents = $(evt.target).contents();
+          $(evt.target.document).ready(() => {
+            $contents.find('[srcset]').attr('srcset', ''); // できれば対応
+            $contents.find(`[${ref}]`).each((i, elm) => {
+              var $elm = $(elm);
+              var path = $elm.attr(ref);
+
+              // httpとhttps
+              if(path.match(/^http.*:/i)) {
+                return;
+              }
+
+              // // '//'で始まるパス
+              // if(path.match(/^\/\//i)) {
+              //   $elm.attr(ref, path.replace(/^\/\//, domain));
+              //   return;
+              // }
+
+              // '/'で始まるパス（サイトルート相対パス）
+              if(path.match(/^\//i)) {
+                $elm.attr(ref, path.replace(/^\//, rootPath));
+                return;
+              }
+
+              // 相対パス（'.'で始まる相対パス含む）
+              $elm.attr(ref, parentPath + path);
+            });
+          });
+        });
+      });
+    });
   }
 
   formatDate(date) {
