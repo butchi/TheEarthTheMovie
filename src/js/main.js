@@ -80,13 +80,39 @@ class Main {
       var rootPath = (site.url.match(/^([httpsfile]+:\/{2,3}[0-9a-z\.\-:]+?:?[0-9]*?\/)/i) || [])[1];
       var parentPath = (site.url.match(/^(.+\/)/i) || [])[1];
       var $iframe = $(`<iframe width="${site.width}" height="${site.height}"></iframe>`);
+
       $iframe.addClass(name);
       $iframe.attr('src', `template/${name}.html`);
       $('.bg-site').append($iframe);
       $iframe.on('load', (evt) => {
-        ['src', 'href'].forEach((ref) => {
-          var $contents = $(evt.target).contents();
-          $(evt.target.document).ready(() => {
+        var $contents = $(evt.target).contents();
+        $(evt.target.document).ready(() => {
+          if(site.target) {
+            // TODO: 定期的に位置調整
+            let $target = $contents.find(site.target).eq(0);
+            let offset = $target.offset();
+
+            $target.text();
+
+            $target.css({
+              width: 640,
+              'min-width': 640, 
+              'max-width': 640, 
+              height: 360,
+              'min-height': 360, 
+              'max-height': 360, 
+              border: 'none',
+            });
+
+            $iframe.css({
+              position: 'absolute',
+              left: '50%',
+              top: '50%',
+              'margin-left': - offset.left - 320,
+              'margin-top': - offset.top - 180,
+            });
+          }
+          ['src', 'href'].forEach((ref) => {
             $contents.find('[srcset]').attr('srcset', ''); // できれば対応
             $contents.find(`[${ref}]`).each((i, elm) => {
               var $elm = $(elm);
@@ -96,12 +122,6 @@ class Main {
               if(path.match(/^http.*:/i)) {
                 return;
               }
-
-              // // '//'で始まるパス
-              // if(path.match(/^\/\//i)) {
-              //   $elm.attr(ref, path.replace(/^\/\//, domain));
-              //   return;
-              // }
 
               // '/'で始まるパス（サイトルート相対パス）
               if(path.match(/^\//i)) {

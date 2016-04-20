@@ -2,11 +2,11 @@ import jpeg from 'jpeg-js';
 
 export default class Movie {
   constructor() {
-    this.$stage = $('main > .face');
+    this.$stage = $('main > .media > .face');
     this.canvas = this.$stage.find('.movie canvas').get(0);
     this.ctx = this.canvas.getContext('2d');
 
-    this.canvasEarth = this.$stage.find('.three canvas').get(0);
+    this.canvasEarth = $('.wrapper > .three canvas').get(0);
     this.ctxEarth = this.canvasEarth.getContext('2d');
   }
 

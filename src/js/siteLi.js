@@ -8,7 +8,8 @@ const siteLi = {
   "jp__nicovideo": {
     url: "http://www.nicovideo.jp/watch/sm1208573",
     width: 960,
-    height: 540,
+    height: 1600,
+    target: '#nicoplayerContainer',
   },
 
   // ニュースサイト
@@ -25,7 +26,8 @@ const siteLi = {
   "net__gigazine": {
     url: "http://gigazine.net/news/20160418-wow-signal-suspicious-comets/",
     width: 960,
-    height: 540,
+    height: 1600,
+    target: '#article .cntimage img',
   },
   // "jp__co__yahoo__headlines": {
   //   url: "http://headlines.yahoo.co.jp/hl?a=20160413-00010006-afpbbnewsv-int",

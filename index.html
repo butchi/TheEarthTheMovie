@@ -7,22 +7,25 @@
   </head>
   <body>
     <div class="wrapper">
-      <main>
+      <div class="three"></div>
+      <main class="main">
         <div class="bg-site"></div>
-        <div class="face">
-          <div class="three"></div>
-          <div class="movie">
-            <canvas></canvas>
+        <div class="cover"></div>
+        <div class="media">
+          <div class="face">
+            <div class="movie">
+              <canvas></canvas>
+            </div>
           </div>
-        </div>
-        <div class="controller">
-          <button class="btn-gotohead">Go to head</button>
-          <button class="btn-play">Play / Pause</button>
-          <button disabled="" class="btn-sound">Sound on / off</button><span class="time">
-            <time class="time-cur"></time>/
-            <time class="time-total"></time></span>
-          <input type="range" min="0" max="1" step="0.00001" value="0" class="slider">
-          <button disabled="" class="btn-setting">Setting</button>
+          <div class="controller">
+            <button class="btn-gotohead">Go to head</button>
+            <button class="btn-play">Play / Pause</button>
+            <button disabled="" class="btn-sound">Sound on / off</button><span class="time">
+              <time class="time-cur"></time>/
+              <time class="time-total"></time></span>
+            <input type="range" min="0" max="1" step="0.00001" value="0" class="slider">
+            <button disabled="" class="btn-setting">Setting</button>
+          </div>
         </div>
       </main>
     </div>

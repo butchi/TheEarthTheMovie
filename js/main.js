@@ -3460,9 +3460,9 @@ var Earth = function () {
     key: 'init',
     value: function init() {
 
-      var $stage = $('main > .face');
+      var $stage = $('main > .media > .face');
 
-      container = $stage.find('.three').get(0);
+      container = $('.wrapper > .three').get(0);
 
       camera = new THREE.PerspectiveCamera(60, WIDTH / HEIGHT, 1, 2000);
       camera.position.z = 500;
@@ -3547,11 +3547,11 @@ var Movie = function () {
   function Movie() {
     _classCallCheck(this, Movie);
 
-    this.$stage = $('main > .face');
+    this.$stage = $('main > .media > .face');
     this.canvas = this.$stage.find('.movie canvas').get(0);
     this.ctx = this.canvas.getContext('2d');
 
-    this.canvasEarth = this.$stage.find('.three canvas').get(0);
+    this.canvasEarth = $('.wrapper > .three canvas').get(0);
     this.ctxEarth = this.canvasEarth.getContext('2d');
   }
 
@@ -3799,13 +3799,39 @@ var Main = function () {
         var rootPath = (site.url.match(/^([httpsfile]+:\/{2,3}[0-9a-z\.\-:]+?:?[0-9]*?\/)/i) || [])[1];
         var parentPath = (site.url.match(/^(.+\/)/i) || [])[1];
         var $iframe = $('<iframe width="' + site.width + '" height="' + site.height + '"></iframe>');
+
         $iframe.addClass(name);
         $iframe.attr('src', 'template/' + name + '.html');
         $('.bg-site').append($iframe);
         $iframe.on('load', function (evt) {
-          ['src', 'href'].forEach(function (ref) {
-            var $contents = $(evt.target).contents();
-            $(evt.target.document).ready(function () {
+          var $contents = $(evt.target).contents();
+          $(evt.target.document).ready(function () {
+            if (site.target) {
+              // TODO: 定期的に位置調整
+              var $target = $contents.find(site.target).eq(0);
+              var offset = $target.offset();
+
+              $target.text();
+
+              $target.css({
+                width: 640,
+                'min-width': 640,
+                'max-width': 640,
+                height: 360,
+                'min-height': 360,
+                'max-height': 360,
+                border: 'none'
+              });
+
+              $iframe.css({
+                position: 'absolute',
+                left: '50%',
+                top: '50%',
+                'margin-left': -offset.left - 320,
+                'margin-top': -offset.top - 180
+              });
+            }
+            ['src', 'href'].forEach(function (ref) {
               $contents.find('[srcset]').attr('srcset', ''); // できれば対応
               $contents.find('[' + ref + ']').each(function (i, elm) {
                 var $elm = $(elm);
@@ -3815,12 +3841,6 @@ var Main = function () {
                 if (path.match(/^http.*:/i)) {
                   return;
                 }
-
-                // // '//'で始まるパス
-                // if(path.match(/^\/\//i)) {
-                //   $elm.attr(ref, path.replace(/^\/\//, domain));
-                //   return;
-                // }
 
                 // '/'で始まるパス（サイトルート相対パス）
                 if (path.match(/^\//i)) {
@@ -3890,7 +3910,8 @@ var siteLi = {
   "jp__nicovideo": {
     url: "http://www.nicovideo.jp/watch/sm1208573",
     width: 960,
-    height: 540
+    height: 1600,
+    target: '#nicoplayerContainer'
   },
 
   // ニュースサイト
@@ -3907,7 +3928,8 @@ var siteLi = {
   "net__gigazine": {
     url: "http://gigazine.net/news/20160418-wow-signal-suspicious-comets/",
     width: 960,
-    height: 540
+    height: 1600,
+    target: '#article .cntimage img'
   }
 };
 
