@@ -3801,36 +3801,15 @@ var Main = function () {
         var $iframe = $('<iframe width="' + site.width + '" height="' + site.height + '"></iframe>');
 
         $iframe.addClass(name);
-        $iframe.attr('src', 'template/' + name + '.html');
+        try {
+          $iframe.attr('src', 'template/' + name + '.html');
+        } catch (e) {
+          console.log(e);
+        }
         $('.bg-site').append($iframe);
         $iframe.on('load', function (evt) {
           var $contents = $(evt.target).contents();
           $(evt.target.document).ready(function () {
-            if (site.target) {
-              // TODO: 定期的に位置調整
-              var $target = $contents.find(site.target).eq(0);
-              var offset = $target.offset();
-
-              $target.text();
-
-              $target.css({
-                width: 640,
-                'min-width': 640,
-                'max-width': 640,
-                height: 360,
-                'min-height': 360,
-                'max-height': 360,
-                border: 'none'
-              });
-
-              $iframe.css({
-                position: 'absolute',
-                left: '50%',
-                top: '50%',
-                'margin-left': -offset.left - 320,
-                'margin-top': -offset.top - 180
-              });
-            }
             ['src', 'href'].forEach(function (ref) {
               $contents.find('[srcset]').attr('srcset', ''); // できれば対応
               $contents.find('[' + ref + ']').each(function (i, elm) {
@@ -3839,6 +3818,11 @@ var Main = function () {
 
                 // httpとhttps
                 if (path.match(/^http.*:/i)) {
+                  return;
+                }
+
+                // '//'で始まるパス（プロトコル省略）
+                if (path.match(/^\/\//i)) {
                   return;
                 }
 
@@ -3852,6 +3836,73 @@ var Main = function () {
                 $elm.attr(ref, parentPath + path);
               });
             });
+
+            if (site.title) {
+              $contents.find(site.title).text('セロ弾きのゴーシュ');
+            }
+
+            if (site.desc) {
+              var txt = '　ゴーシュは町の活動写真館でセロを弾く係りでした。けれどもあんまり上手でないという評判でした。上手でないどころではなく実は仲間の楽手のなかではいちばん下手でしたから、いつでも楽長にいじめられるのでした。\n　ひるすぎみんなは楽屋に円くならんで今度の町の音楽会へ出す第六交響曲こうきょうきょくの練習をしていました。\n　トランペットは一生けん命歌っています。\n　ヴァイオリンも二いろ風のように鳴っています。\n　クラリネットもボーボーとそれに手伝っています。\n　ゴーシュも口をりんと結んで眼めを皿さらのようにして楽譜がくふを見つめながらもう一心に弾いています。\n　にわかにぱたっと楽長が両手を鳴らしました。みんなぴたりと曲をやめてしんとしました。楽長がどなりました。\n「セロがおくれた。トォテテ　テテテイ、ここからやり直し。はいっ。」\n　みんなは今の所の少し前の所からやり直しました。ゴーシュは顔をまっ赤にして額に汗あせを出しながらやっといま云いわれたところを通りました。ほっと安心しながら、つづけて弾いていますと楽長がまた手をぱっと拍うちました。\n「セロっ。糸が合わない。困るなあ。ぼくはきみにドレミファを教えてまでいるひまはないんだがなあ。」\n　みんなは気の毒そうにしてわざとじぶんの譜をのぞき込こんだりじぶんの楽器をはじいて見たりしています。ゴーシュはあわてて糸を直しました。これはじつはゴーシュも悪いのですがセロもずいぶん悪いのでした。\n'.replace(/\n/g, '<br>');
+              if (!site.desc_position) {
+                $contents.find(site.desc).html(txt);
+              }
+              if (site.desc_position === 'before') {
+                $contents.find(site.desc).before(txt);
+              }
+              if (site.desc_position === 'after') {
+                $contents.find(site.desc).after(txt);
+              }
+            }
+
+            if (site.remove) {
+              Object.keys(site.remove).forEach(function (selector) {
+                if (site.remove[selector]) {
+                  $contents.find(selector).remove();
+                }
+              });
+            }
+
+            if (site.replace) {
+              Object.keys(site.replace).forEach(function (selector) {
+                $contents.find(selector).html(site.replace[selector]);
+              });
+            }
+
+            if (site.style) {
+              $contents.find('body').append('<style>' + site.style + '</style>');
+            }
+
+            setTimeout(setPosition, 0);
+            setTimeout(setPosition, 2000);
+            setTimeout(setPosition, 5000);
+
+            function setPosition() {
+              if (site.target) {
+                // TODO: 定期的に位置調整
+                var $target = $contents.find(site.target).eq(0);
+                var offset = $target.offset();
+
+                $target.text();
+
+                $target.css({
+                  width: 640,
+                  'min-width': 640,
+                  'max-width': 640,
+                  height: 380,
+                  'min-height': 380,
+                  'max-height': 380,
+                  border: 'none'
+                });
+
+                $iframe.css({
+                  position: 'absolute',
+                  left: '50%',
+                  top: '50%',
+                  'margin-left': -offset.left - 320,
+                  'margin-top': -offset.top - 190
+                });
+              }
+            }
           });
         });
       });
@@ -3900,43 +3951,74 @@ window.licker = window.licker || {};
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+var kanjiName = '物智';
+
 var siteLi = {
   // 動画サイト
   "com__youtube": {
-    url: "https://www.youtube.com/watch?v=_-1BeTJAbns",
-    width: 960,
-    height: 540
+    "url": "https://www.youtube.com/watch?v=_-1BeTJAbns",
+    "width": 960,
+    "height": 1600,
+    "target": "#player-api",
+    "title": "#eow-title",
+    "replace": {
+      ".yt-thumb-clip": "<img src=\"//placehold.it/48x48\" width=\"48\" height=\"48\"><span class=\"vertical-align\"></span>",
+      "#watch-header .yt-user-info a": "" + kanjiName
+    }
   },
   "jp__nicovideo": {
-    url: "http://www.nicovideo.jp/watch/sm1208573",
-    width: 960,
-    height: 1600,
-    target: '#nicoplayerContainer'
+    "url": "http://www.nicovideo.jp/watch/sm1208573",
+    "width": 960,
+    "height": 1600,
+    "target": '#nicoplayerContainer'
   },
 
   // ニュースサイト
   "jp__or__nhk": {
-    url: "http://www3.nhk.or.jp/news/html/20160420/k10010489771000.html",
-    width: 960,
-    height: 540
+    "url": "http://www3.nhk.or.jp/news/html/20160420/k10010489771000.html",
+    "width": 1280,
+    "height": 1600,
+    "target": "#news_image_div img",
+    "title": ".no-js .detail .detail-no-js .module--header .contentTitle",
+    "desc": "#news_textbody",
+    "style": "\n.header-top .header-logo img {\n  width: 287px;\n  height: 26px;\n}\n\n.no-js .detail .detail-no-js #news_image_div img {\n  width: 640px !important;\n  height: 380px !important;\n  margin-bottom: 20px;\n}\n"
   },
   "com__asahi": {
-    url: "http://www.asahi.com/articles/DA3S12308696.html",
-    width: 960,
-    height: 540
+    "url": "http://www.asahi.com/articles/DA3S12308696.html",
+    "width": 960,
+    "height": 1600,
+    "target": ".ImagesMod",
+    "title": "#Main #MainInner .ArticleTitle .Title h1",
+    "desc": "#Main #MainInner .ArticleText p:first-child",
+    "replace": {
+      "#Main #MainInner .ArticleBody .AdMod": "<img src=\"//placehold.it/300x300\">",
+      "#Sub #SubInner .Section .Ad": "<img src=\"//placehold.it/300x250\">"
+    },
+    "style": "\n#Main #MainInner .ArticleBody .ImagesMod {\n  margin-bottom: 20px;\n}\n    "
   },
   "net__gigazine": {
-    url: "http://gigazine.net/news/20160418-wow-signal-suspicious-comets/",
-    width: 960,
-    height: 1600,
-    target: '#article .cntimage img'
+    "url": "http://gigazine.net/news/20160418-wow-signal-suspicious-comets/",
+    "width": 960,
+    "height": 1600,
+    "target": '#article .cntimage img',
+    "title": '#article .cntimage .title',
+    "desc": '#article .cntimage .preface br:nth-of-type(3)',
+    "desc_position": "after",
+    "remove": {
+      '#article .cntimage .yeartime': true,
+      '#article .cntimage .preface small:first-child': true
+    },
+    "replace": {
+      "#TC": "<img src=\"//placehold.it/728x90\">"
+    },
+    "style": "\n#TC {\n  width: 728px;\n  height: 90px;\n}\n"
   }
 };
 
 // "jp__co__yahoo__headlines": {
-//   url: "http://headlines.yahoo.co.jp/hl?a=20160413-00010006-afpbbnewsv-int",
-//   width: 960,
-//   height: 540,
+//   "url": "http://headlines.yahoo.co.jp/hl?a=20160413-00010006-afpbbnewsv-int",
+//   "width": 960,
+//   "height": 1600,
 // },
 exports.default = siteLi;
 
