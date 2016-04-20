@@ -13,12 +13,12 @@ const siteLi = {
       "#watch-header .yt-user-info a": `${kanjiName}`,
     }
   },
-  "jp__nicovideo": {
-    "url": "http://www.nicovideo.jp/watch/sm1208573",
-    "width": 960,
-    "height": 1600,
-    "target": '#nicoplayerContainer',
-  },
+  // "jp__nicovideo": {
+  //   "url": "http://www.nicovideo.jp/watch/sm1208573",
+  //   "width": 960,
+  //   "height": 1600,
+  //   "target": '#nicoplayerContainer',
+  // },
 
   // ニュースサイト
   "jp__or__nhk": {
@@ -80,6 +80,27 @@ const siteLi = {
 }
 `
   },
+  "jp__co__impress__watch__pc": {
+    "url": "http://pc.watch.impress.co.jp/docs/news/yajiuma/20160413_753024.html",
+    "width": 850,
+    "height": 1600,
+    "target": "div.image-wrap",
+    "title": "div.hdg-article h1",
+    "desc": "div.image-wrap + p",
+    "style": `
+div.image-wrap {
+  margin-bottom: 50px;
+}
+
+body.lyt-smx .page .extra {
+  display: none;
+}
+
+.lyt-smx div.main {
+  min-width: 640px;
+}
+`
+  }
   // "jp__co__yahoo__headlines": {
   //   "url": "http://headlines.yahoo.co.jp/hl?a=20160413-00010006-afpbbnewsv-int",
   //   "width": 960,

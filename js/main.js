@@ -3692,6 +3692,177 @@ exports.default = Player;
 },{}],11:[function(require,module,exports){
 'use strict';
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _siteLi = require('./siteLi');
+
+var _siteLi2 = _interopRequireDefault(_siteLi);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var cnt = 0;
+
+var SiteBg = function () {
+  function SiteBg() {
+    _classCallCheck(this, SiteBg);
+
+    this.keys = Object.keys(_siteLi2.default);
+  }
+
+  _createClass(SiteBg, [{
+    key: 'pushBg',
+    value: function pushBg() {
+      var idx = arguments.length <= 0 || arguments[0] === undefined ? cnt : arguments[0];
+
+      cnt = (cnt + 1) % this.keys.length;
+      var name = this.keys[idx];
+
+      var site = _siteLi2.default[name];
+      var rootPath = (site.url.match(/^([httpsfile]+:\/{2,3}[0-9a-z\.\-:]+?:?[0-9]*?\/)/i) || [])[1];
+      var parentPath = (site.url.match(/^(.+\/)/i) || [])[1];
+      var $iframe = $('<iframe width="' + site.width + '" height="' + site.height + '"></iframe>');
+
+      $iframe.addClass(name);
+      try {
+        $iframe.attr('src', 'template/' + name + '.html');
+      } catch (e) {
+        console.log(e);
+      }
+      $('.bg-site').prepend($iframe);
+      $iframe.css({
+        "z-index": -1
+      });
+      $iframe.on('load', function (evt) {
+        var $contents = $(evt.target).contents();
+        $(evt.target.document).ready(function () {
+          ['src', 'href'].forEach(function (ref) {
+            $contents.find('[srcset]').attr('srcset', ''); // できれば対応
+            $contents.find('[' + ref + ']').each(function (i, elm) {
+              var $elm = $(elm);
+              var path = $elm.attr(ref);
+
+              // httpとhttps
+              if (path.match(/^http.*:/i)) {
+                return;
+              }
+
+              // '//'で始まるパス（プロトコル省略）
+              if (path.match(/^\/\//i)) {
+                return;
+              }
+
+              // '/'で始まるパス（サイトルート相対パス）
+              if (path.match(/^\//i)) {
+                $elm.attr(ref, path.replace(/^\//, rootPath));
+                return;
+              }
+
+              // 相対パス（'.'で始まる相対パス含む）
+              $elm.attr(ref, parentPath + path);
+            });
+          });
+
+          if (site.title) {
+            $contents.find(site.title).text('セロ弾きのゴーシュ');
+          }
+
+          if (site.desc) {
+            var txt = '　ゴーシュは町の活動写真館でセロを弾く係りでした。けれどもあんまり上手でないという評判でした。上手でないどころではなく実は仲間の楽手のなかではいちばん下手でしたから、いつでも楽長にいじめられるのでした。\n　ひるすぎみんなは楽屋に円くならんで今度の町の音楽会へ出す第六交響曲こうきょうきょくの練習をしていました。\n　トランペットは一生けん命歌っています。\n　ヴァイオリンも二いろ風のように鳴っています。\n　クラリネットもボーボーとそれに手伝っています。\n　ゴーシュも口をりんと結んで眼めを皿さらのようにして楽譜がくふを見つめながらもう一心に弾いています。\n　にわかにぱたっと楽長が両手を鳴らしました。みんなぴたりと曲をやめてしんとしました。楽長がどなりました。\n「セロがおくれた。トォテテ　テテテイ、ここからやり直し。はいっ。」\n　みんなは今の所の少し前の所からやり直しました。ゴーシュは顔をまっ赤にして額に汗あせを出しながらやっといま云いわれたところを通りました。ほっと安心しながら、つづけて弾いていますと楽長がまた手をぱっと拍うちました。\n「セロっ。糸が合わない。困るなあ。ぼくはきみにドレミファを教えてまでいるひまはないんだがなあ。」\n　みんなは気の毒そうにしてわざとじぶんの譜をのぞき込こんだりじぶんの楽器をはじいて見たりしています。ゴーシュはあわてて糸を直しました。これはじつはゴーシュも悪いのですがセロもずいぶん悪いのでした。\n'.replace(/\n/g, '<br>');
+            if (!site.desc_position) {
+              $contents.find(site.desc).html(txt);
+            }
+            if (site.desc_position === 'before') {
+              $contents.find(site.desc).before(txt);
+            }
+            if (site.desc_position === 'after') {
+              $contents.find(site.desc).after(txt);
+            }
+          }
+
+          if (site.remove) {
+            Object.keys(site.remove).forEach(function (selector) {
+              if (site.remove[selector]) {
+                $contents.find(selector).remove();
+              }
+            });
+          }
+
+          if (site.replace) {
+            Object.keys(site.replace).forEach(function (selector) {
+              $contents.find(selector).html(site.replace[selector]);
+            });
+          }
+
+          if (site.style) {
+            $contents.find('body').append('<style>' + site.style + '</style>');
+          }
+
+          setTimeout(setPosition, 0);
+          setTimeout(setPosition, 2000);
+          setTimeout(setPosition, 5000);
+
+          function setPosition() {
+            if (site.target) {
+              // TODO: 定期的に位置調整
+              var $target = $contents.find(site.target).eq(0);
+              var offset = $target.offset();
+
+              $target.text();
+
+              $target.css({
+                width: 640,
+                'min-width': 640,
+                'max-width': 640,
+                height: 380,
+                'min-height': 380,
+                'max-height': 380,
+                border: 'none'
+              });
+
+              $iframe.css({
+                position: 'absolute',
+                left: '50%',
+                top: '50%',
+                'margin-left': -offset.left - 320,
+                'margin-top': -offset.top - 190
+              });
+            }
+          }
+        });
+      });
+    }
+  }, {
+    key: 'popBg',
+    value: function popBg() {
+      var $last = $('.bg-site').find('iframe:last-child');
+      var $last2 = $('.bg-site').find('iframe:nth-last-child(2)');
+
+      $last.remove();
+      $last2.css({
+        "z-index": 0
+      });
+
+      $last = null;
+    }
+  }]);
+
+  return SiteBg;
+}();
+
+exports.default = SiteBg;
+
+
+Object.keys(_siteLi2.default).forEach(function (name, i) {});
+
+},{"./siteLi":13}],12:[function(require,module,exports){
+'use strict';
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _Player = require('./Player');
@@ -3709,6 +3880,10 @@ var _Movie2 = _interopRequireDefault(_Movie);
 var _siteLi = require('./siteLi');
 
 var _siteLi2 = _interopRequireDefault(_siteLi);
+
+var _SiteBg = require('./SiteBg');
+
+var _SiteBg2 = _interopRequireDefault(_SiteBg);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -3794,118 +3969,18 @@ var Main = function () {
       this.earth.animate();
       this.movie = new _Movie2.default();
 
-      Object.keys(_siteLi2.default).forEach(function (name, i) {
-        var site = _siteLi2.default[name];
-        var rootPath = (site.url.match(/^([httpsfile]+:\/{2,3}[0-9a-z\.\-:]+?:?[0-9]*?\/)/i) || [])[1];
-        var parentPath = (site.url.match(/^(.+\/)/i) || [])[1];
-        var $iframe = $('<iframe width="' + site.width + '" height="' + site.height + '"></iframe>');
+      this.siteBg = new _SiteBg2.default();
 
-        $iframe.addClass(name);
-        try {
-          $iframe.attr('src', 'template/' + name + '.html');
-        } catch (e) {
-          console.log(e);
-        }
-        $('.bg-site').append($iframe);
-        $iframe.on('load', function (evt) {
-          var $contents = $(evt.target).contents();
-          $(evt.target.document).ready(function () {
-            ['src', 'href'].forEach(function (ref) {
-              $contents.find('[srcset]').attr('srcset', ''); // できれば対応
-              $contents.find('[' + ref + ']').each(function (i, elm) {
-                var $elm = $(elm);
-                var path = $elm.attr(ref);
+      this.siteBg.pushBg(4);
+      this.siteBg.pushBg(4);
+      this.siteBg.popBg();
+      // this.siteBg.pushBg();
+      // this.siteBg.pushBg();
 
-                // httpとhttps
-                if (path.match(/^http.*:/i)) {
-                  return;
-                }
-
-                // '//'で始まるパス（プロトコル省略）
-                if (path.match(/^\/\//i)) {
-                  return;
-                }
-
-                // '/'で始まるパス（サイトルート相対パス）
-                if (path.match(/^\//i)) {
-                  $elm.attr(ref, path.replace(/^\//, rootPath));
-                  return;
-                }
-
-                // 相対パス（'.'で始まる相対パス含む）
-                $elm.attr(ref, parentPath + path);
-              });
-            });
-
-            if (site.title) {
-              $contents.find(site.title).text('セロ弾きのゴーシュ');
-            }
-
-            if (site.desc) {
-              var txt = '　ゴーシュは町の活動写真館でセロを弾く係りでした。けれどもあんまり上手でないという評判でした。上手でないどころではなく実は仲間の楽手のなかではいちばん下手でしたから、いつでも楽長にいじめられるのでした。\n　ひるすぎみんなは楽屋に円くならんで今度の町の音楽会へ出す第六交響曲こうきょうきょくの練習をしていました。\n　トランペットは一生けん命歌っています。\n　ヴァイオリンも二いろ風のように鳴っています。\n　クラリネットもボーボーとそれに手伝っています。\n　ゴーシュも口をりんと結んで眼めを皿さらのようにして楽譜がくふを見つめながらもう一心に弾いています。\n　にわかにぱたっと楽長が両手を鳴らしました。みんなぴたりと曲をやめてしんとしました。楽長がどなりました。\n「セロがおくれた。トォテテ　テテテイ、ここからやり直し。はいっ。」\n　みんなは今の所の少し前の所からやり直しました。ゴーシュは顔をまっ赤にして額に汗あせを出しながらやっといま云いわれたところを通りました。ほっと安心しながら、つづけて弾いていますと楽長がまた手をぱっと拍うちました。\n「セロっ。糸が合わない。困るなあ。ぼくはきみにドレミファを教えてまでいるひまはないんだがなあ。」\n　みんなは気の毒そうにしてわざとじぶんの譜をのぞき込こんだりじぶんの楽器をはじいて見たりしています。ゴーシュはあわてて糸を直しました。これはじつはゴーシュも悪いのですがセロもずいぶん悪いのでした。\n'.replace(/\n/g, '<br>');
-              if (!site.desc_position) {
-                $contents.find(site.desc).html(txt);
-              }
-              if (site.desc_position === 'before') {
-                $contents.find(site.desc).before(txt);
-              }
-              if (site.desc_position === 'after') {
-                $contents.find(site.desc).after(txt);
-              }
-            }
-
-            if (site.remove) {
-              Object.keys(site.remove).forEach(function (selector) {
-                if (site.remove[selector]) {
-                  $contents.find(selector).remove();
-                }
-              });
-            }
-
-            if (site.replace) {
-              Object.keys(site.replace).forEach(function (selector) {
-                $contents.find(selector).html(site.replace[selector]);
-              });
-            }
-
-            if (site.style) {
-              $contents.find('body').append('<style>' + site.style + '</style>');
-            }
-
-            setTimeout(setPosition, 0);
-            setTimeout(setPosition, 2000);
-            setTimeout(setPosition, 5000);
-
-            function setPosition() {
-              if (site.target) {
-                // TODO: 定期的に位置調整
-                var $target = $contents.find(site.target).eq(0);
-                var offset = $target.offset();
-
-                $target.text();
-
-                $target.css({
-                  width: 640,
-                  'min-width': 640,
-                  'max-width': 640,
-                  height: 380,
-                  'min-height': 380,
-                  'max-height': 380,
-                  border: 'none'
-                });
-
-                $iframe.css({
-                  position: 'absolute',
-                  left: '50%',
-                  top: '50%',
-                  'margin-left': -offset.left - 320,
-                  'margin-top': -offset.top - 190
-                });
-              }
-            }
-          });
-        });
-      });
+      // setInterval(() => {
+      //   this.siteBg.popBg();
+      //   this.siteBg.pushBg();
+      // }, 15000);
     }
   }, {
     key: 'formatDate',
@@ -3945,7 +4020,7 @@ window.licker = window.licker || {};
   ns.main = new Main();
 })(window.licker);
 
-},{"./Earth":8,"./Movie":9,"./Player":10,"./siteLi":12}],12:[function(require,module,exports){
+},{"./Earth":8,"./Movie":9,"./Player":10,"./SiteBg":11,"./siteLi":13}],13:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -3966,12 +4041,12 @@ var siteLi = {
       "#watch-header .yt-user-info a": "" + kanjiName
     }
   },
-  "jp__nicovideo": {
-    "url": "http://www.nicovideo.jp/watch/sm1208573",
-    "width": 960,
-    "height": 1600,
-    "target": '#nicoplayerContainer'
-  },
+  // "jp__nicovideo": {
+  //   "url": "http://www.nicovideo.jp/watch/sm1208573",
+  //   "width": 960,
+  //   "height": 1600,
+  //   "target": '#nicoplayerContainer',
+  // },
 
   // ニュースサイト
   "jp__or__nhk": {
@@ -4012,14 +4087,23 @@ var siteLi = {
       "#TC": "<img src=\"//placehold.it/728x90\">"
     },
     "style": "\n#TC {\n  width: 728px;\n  height: 90px;\n}\n"
+  },
+  "jp__co__impress__watch__pc": {
+    "url": "http://pc.watch.impress.co.jp/docs/news/yajiuma/20160413_753024.html",
+    "width": 850,
+    "height": 1600,
+    "target": "div.image-wrap",
+    "title": "div.hdg-article h1",
+    "desc": "div.image-wrap + p",
+    "style": "\ndiv.image-wrap {\n  margin-bottom: 50px;\n}\n\nbody.lyt-smx .page .extra {\n  display: none;\n}\n\n.lyt-smx div.main {\n  min-width: 640px;\n}\n"
   }
+  // "jp__co__yahoo__headlines": {
+  //   "url": "http://headlines.yahoo.co.jp/hl?a=20160413-00010006-afpbbnewsv-int",
+  //   "width": 960,
+  //   "height": 1600,
+  // },
 };
 
-// "jp__co__yahoo__headlines": {
-//   "url": "http://headlines.yahoo.co.jp/hl?a=20160413-00010006-afpbbnewsv-int",
-//   "width": 960,
-//   "height": 1600,
-// },
 exports.default = siteLi;
 
-},{}]},{},[11]);
+},{}]},{},[12]);

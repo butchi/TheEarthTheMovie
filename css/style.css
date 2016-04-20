@@ -85,17 +85,20 @@ button {
   left: 0;
   top: 0;
   width: 100%;
-  height: 100%;
-  background-image: url(../img/bg.jpg);
-  background-size: cover; }
+  height: 100%; }
 
-.bg-site {
+.bg {
   position: absolute;
   left: 0;
   top: 0;
   width: 100%;
   height: 100%;
+  background-image: url(../img/bg.jpg);
+  background-size: cover;
   z-index: 0; }
+
+.bg-site {
+  position: static; }
   .bg-site iframe {
     background-color: #fff; }
 
