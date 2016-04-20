@@ -3,8 +3,8 @@ var camera, scene, renderer;
 var group;
 var mouseX = 0, mouseY = 0;
 
-var WIDTH = 640;
-var HEIGHT = 350;
+var WIDTH = 640 / 2;
+var HEIGHT = 350 / 2;
 
 export default class Earth {
   constructor() {
