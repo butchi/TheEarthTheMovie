@@ -3894,11 +3894,6 @@ var siteLi = {
   },
 
   // ニュースサイト
-  // "jp__co__yahoo__headlines": {
-  //   url: "http://headlines.yahoo.co.jp/hl?a=20160413-00010006-afpbbnewsv-int",
-  //   width: 960,
-  //   height: 540,
-  // },
   "jp__or__nhk": {
     url: "http://www3.nhk.or.jp/news/html/20160420/k10010489771000.html",
     width: 960,
@@ -3916,6 +3911,11 @@ var siteLi = {
   }
 };
 
+// "jp__co__yahoo__headlines": {
+//   url: "http://headlines.yahoo.co.jp/hl?a=20160413-00010006-afpbbnewsv-int",
+//   width: 960,
+//   height: 540,
+// },
 exports.default = siteLi;
 
 },{}]},{},[11]);
