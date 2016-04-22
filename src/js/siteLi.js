@@ -1,4 +1,4 @@
-const kanjiName = '物智';
+const kanjiName = '岩淵勇樹';
 
 const siteLi = {
   // 動画サイト
