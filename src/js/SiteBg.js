@@ -154,6 +154,12 @@ export default class SiteBg {
       "visibility": 'visible',
     });
 
+    $browserFrame.css({
+      width: $last2.width(),
+      left: $last2.offset().left,
+      top: $last2.offset().top,
+    });
+
     $last = null;
   }
 }

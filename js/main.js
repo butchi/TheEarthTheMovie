@@ -3707,12 +3707,15 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var cnt = 0;
+var $browserFrame;
 
 var SiteBg = function () {
   function SiteBg() {
     _classCallCheck(this, SiteBg);
 
     this.keys = Object.keys(_siteLi2.default);
+
+    $browserFrame = $('.browser-frame');
   }
 
   _createClass(SiteBg, [{
@@ -3854,6 +3857,12 @@ var SiteBg = function () {
         "visibility": 'visible'
       });
 
+      $browserFrame.css({
+        width: $last2.width(),
+        left: $last2.offset().left,
+        top: $last2.offset().top
+      });
+
       $last = null;
     }
   }]);
@@ -3908,7 +3917,8 @@ var Main = function () {
       _this.epochDate = new Date(-62135596800000); // 西暦1年1月1日0時0分0秒
       // var epochDate = new Date(2016, 3, 30, 13 + 9, 4, 20);
       _this.$slider = $('.slider');
-      _this.$browserTitle = $('.browser-frame .title');
+      _this.$browserFrame = $('.browser-frame');
+      _this.$browserTitle = _this.$browserFrame.find('.title');
       _this.$timeCur = $('.controller .time-cur');
       _this.$timeTotal = $('.controller .time-total');
       _this.$btnGotohead = $('.controller .btn-gotohead');
@@ -3982,7 +3992,7 @@ var Main = function () {
       this.siteBg.pushBg();
       this.siteBg.pushBg();
 
-      setInterval(function () {
+      this.siteBgTimer = setInterval(function () {
         _this2.siteBg.popBg();
         _this2.siteBg.pushBg();
       }, 15000);

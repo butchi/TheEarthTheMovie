@@ -11,7 +11,8 @@ class Main {
       this.epochDate = new Date(-62135596800000); // 西暦1年1月1日0時0分0秒
       // var epochDate = new Date(2016, 3, 30, 13 + 9, 4, 20);
       this.$slider = $('.slider');
-      this.$browserTitle = $('.browser-frame .title');
+      this.$browserFrame = $('.browser-frame');
+      this.$browserTitle = this.$browserFrame.find('.title');
       this.$timeCur = $('.controller .time-cur');
       this.$timeTotal = $('.controller .time-total');
       this.$btnGotohead = $('.controller .btn-gotohead');
@@ -81,7 +82,7 @@ class Main {
     this.siteBg.pushBg();
     this.siteBg.pushBg();
 
-    setInterval(() => {
+    this.siteBgTimer = setInterval(() => {
       this.siteBg.popBg();
       this.siteBg.pushBg();
     }, 15000);
