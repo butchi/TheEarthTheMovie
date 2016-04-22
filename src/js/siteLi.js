@@ -88,18 +88,18 @@ const siteLi = {
     "title": "div.hdg-article h1",
     "desc": "div.image-wrap + p",
     "style": `
-div.image-wrap {
-  margin-bottom: 50px;
-}
+      div.image-wrap {
+        margin-bottom: 50px;
+      }
 
-body.lyt-smx .page .extra {
-  display: none;
-}
+      body.lyt-smx .page .extra {
+        display: none;
+      }
 
-.lyt-smx div.main {
-  min-width: 640px;
-}
-`
+      .lyt-smx div.main {
+        min-width: 640px;
+      }
+    `
   }
   // "jp__co__yahoo__headlines": {
   //   "url": "http://headlines.yahoo.co.jp/hl?a=20160413-00010006-afpbbnewsv-int",
