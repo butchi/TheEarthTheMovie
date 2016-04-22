@@ -1,9 +1,12 @@
 import siteLi from './siteLi';
 var cnt = 0;
+var $browserFrame;
 
 export default class SiteBg {
   constructor() {
     this.keys = Object.keys(siteLi);
+
+    $browserFrame = $('.browser-frame');
   }
 
   pushBg(idx = cnt) {
@@ -23,7 +26,7 @@ export default class SiteBg {
     }
     $('.bg-site').prepend($iframe);
     $iframe.css({
-      "z-index": -1,
+      "visibility": 'hidden',
     });
     $iframe.on('load', (evt) => {
       var $contents = $(evt.target).contents();
@@ -148,7 +151,7 @@ export default class SiteBg {
 
     $last.remove();
     $last2.css({
-      "z-index": 0,
+      "visibility": 'visible',
     });
 
     $last = null;

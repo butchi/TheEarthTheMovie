@@ -3736,7 +3736,7 @@ var SiteBg = function () {
       }
       $('.bg-site').prepend($iframe);
       $iframe.css({
-        "z-index": -1
+        "visibility": 'hidden'
       });
       $iframe.on('load', function (evt) {
         var $contents = $(evt.target).contents();
@@ -3851,7 +3851,7 @@ var SiteBg = function () {
 
       $last.remove();
       $last2.css({
-        "z-index": 0
+        "visibility": 'visible'
       });
 
       $last = null;
