@@ -29,17 +29,17 @@ const siteLi = {
     "title": ".no-js .detail .detail-no-js .module--header .contentTitle",
     "desc": "#news_textbody",
     "style": `
-.header-top .header-logo img {
-  width: 287px;
-  height: 26px;
-}
+      .header-top .header-logo img {
+        width: 287px;
+        height: 26px;
+      }
 
-.no-js .detail .detail-no-js #news_image_div img {
-  width: 640px !important;
-  height: 380px !important;
-  margin-bottom: 20px;
-}
-`,
+      .no-js .detail .detail-no-js #news_image_div img {
+        width: 640px !important;
+        height: 380px !important;
+        margin-bottom: 20px;
+      }
+    `,
   },
   "com__asahi": {
     "url": "http://www.asahi.com/articles/DA3S12308696.html",
@@ -53,9 +53,9 @@ const siteLi = {
       "#Sub #SubInner .Section .Ad": `<img src="//placehold.it/300x250">`,
     },
     "style": `
-#Main #MainInner .ArticleBody .ImagesMod {
-  margin-bottom: 20px;
-}
+      #Main #MainInner .ArticleBody .ImagesMod {
+        margin-bottom: 20px;
+      }
     `,
   },
   "net__gigazine": {
@@ -74,11 +74,11 @@ const siteLi = {
       "#TC": `<img src="//placehold.it/728x90">`,
     },
     "style": `
-#TC {
-  width: 728px;
-  height: 90px;
-}
-`
+      #TC {
+        width: 728px;
+        height: 90px;
+      }
+    `
   },
   "jp__co__impress__watch__pc": {
     "url": "http://pc.watch.impress.co.jp/docs/news/yajiuma/20160413_753024.html",
