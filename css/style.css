@@ -147,6 +147,8 @@ button {
     .media .controller .time {
       display: inline-block;
       width: 280px;
+      font-family: Roboto;
+      font-weight: 400;
       font-size: 9px;
       text-align: center; }
     .media .controller .btn-gotohead {
