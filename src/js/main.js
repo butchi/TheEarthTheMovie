@@ -11,7 +11,7 @@ class Main {
       this.epochDate = new Date(-62135596800000); // 西暦1年1月1日0時0分0秒
       // var epochDate = new Date(2016, 3, 30, 13 + 9, 4, 20);
       this.$slider = $('.slider');
-      this.$time = $('.face .time time');
+      this.$browserTitle = $('.browser-frame .title');
       this.$timeCur = $('.controller .time-cur');
       this.$timeTotal = $('.controller .time-total');
       this.$btnGotohead = $('.controller .btn-gotohead');
@@ -92,12 +92,18 @@ class Main {
     return ret;
   }
 
+  formatTitle(date) {
+    var ret = `${date.getUTCFullYear() - 1}年${date.getUTCMonth()}ヶ月${date.getUTCDate() - 1}日${date.getUTCHours()}時間${date.getUTCMinutes()}分${date.getUTCSeconds()}秒`;
+    return ret;
+  }
+
   updateTime() {
     var curDate = this.player.getCurrentTime();
 
     this.ratio = (curDate.valueOf() - this.player.startDate.valueOf()) / this.player.duration;
 
-    this.$time.text(this.formatDate(curDate));
+    this.$browserTitle.text(this.formatTitle(curDate));
+
     this.$timeCur.text(this.formatDate(curDate));
 
     if(this.player.getPlayerState() === this.player.PlayerState.PLAYING) {

@@ -3740,6 +3740,12 @@ var SiteBg = function () {
       });
       $iframe.on('load', function (evt) {
         var $contents = $(evt.target).contents();
+
+        // スクロールバーを隠す
+        $contents.find('body').css({
+          overflow: 'hidden'
+        });
+
         $(evt.target.document).ready(function () {
           ['src', 'href'].forEach(function (ref) {
             $contents.find('[srcset]').attr('srcset', ''); // できれば対応
@@ -3902,7 +3908,7 @@ var Main = function () {
       _this.epochDate = new Date(-62135596800000); // 西暦1年1月1日0時0分0秒
       // var epochDate = new Date(2016, 3, 30, 13 + 9, 4, 20);
       _this.$slider = $('.slider');
-      _this.$time = $('.face .time time');
+      _this.$browserTitle = $('.browser-frame .title');
       _this.$timeCur = $('.controller .time-cur');
       _this.$timeTotal = $('.controller .time-total');
       _this.$btnGotohead = $('.controller .btn-gotohead');
@@ -3988,6 +3994,12 @@ var Main = function () {
       return ret;
     }
   }, {
+    key: 'formatTitle',
+    value: function formatTitle(date) {
+      var ret = date.getUTCFullYear() - 1 + '年' + date.getUTCMonth() + 'ヶ月' + (date.getUTCDate() - 1) + '日' + date.getUTCHours() + '時間' + date.getUTCMinutes() + '分' + date.getUTCSeconds() + '秒';
+      return ret;
+    }
+  }, {
     key: 'updateTime',
     value: function updateTime() {
       var _this3 = this;
@@ -3996,7 +4008,8 @@ var Main = function () {
 
       this.ratio = (curDate.valueOf() - this.player.startDate.valueOf()) / this.player.duration;
 
-      this.$time.text(this.formatDate(curDate));
+      this.$browserTitle.text(this.formatTitle(curDate));
+
       this.$timeCur.text(this.formatDate(curDate));
 
       if (this.player.getPlayerState() === this.player.PlayerState.PLAYING) {
@@ -4025,7 +4038,7 @@ window.licker = window.licker || {};
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-var kanjiName = '物智';
+var kanjiName = '岩淵勇樹';
 
 var siteLi = {
   // 動画サイト
@@ -4055,7 +4068,7 @@ var siteLi = {
     "target": "#news_image_div img",
     "title": ".no-js .detail .detail-no-js .module--header .contentTitle",
     "desc": "#news_textbody",
-    "style": "\n.header-top .header-logo img {\n  width: 287px;\n  height: 26px;\n}\n\n.no-js .detail .detail-no-js #news_image_div img {\n  width: 640px !important;\n  height: 380px !important;\n  margin-bottom: 20px;\n}\n"
+    "style": "\n      .header-top .header-logo img {\n        width: 287px;\n        height: 26px;\n      }\n\n      .no-js .detail .detail-no-js #news_image_div img {\n        width: 640px !important;\n        height: 380px !important;\n        margin-bottom: 20px;\n      }\n    "
   },
   "com__asahi": {
     "url": "http://www.asahi.com/articles/DA3S12308696.html",
@@ -4068,7 +4081,7 @@ var siteLi = {
       "#Main #MainInner .ArticleBody .AdMod": "<img src=\"//placehold.it/300x300\">",
       "#Sub #SubInner .Section .Ad": "<img src=\"//placehold.it/300x250\">"
     },
-    "style": "\n#Main #MainInner .ArticleBody .ImagesMod {\n  margin-bottom: 20px;\n}\n    "
+    "style": "\n      #Main #MainInner .ArticleBody .ImagesMod {\n        margin-bottom: 20px;\n      }\n    "
   },
   "net__gigazine": {
     "url": "http://gigazine.net/news/20160418-wow-signal-suspicious-comets/",
@@ -4085,7 +4098,7 @@ var siteLi = {
     "replace": {
       "#TC": "<img src=\"//placehold.it/728x90\">"
     },
-    "style": "\n#TC {\n  width: 728px;\n  height: 90px;\n}\n"
+    "style": "\n      #TC {\n        width: 728px;\n        height: 90px;\n      }\n    "
   },
   "jp__co__impress__watch__pc": {
     "url": "http://pc.watch.impress.co.jp/docs/news/yajiuma/20160413_753024.html",
@@ -4094,7 +4107,7 @@ var siteLi = {
     "target": "div.image-wrap",
     "title": "div.hdg-article h1",
     "desc": "div.image-wrap + p",
-    "style": "\ndiv.image-wrap {\n  margin-bottom: 50px;\n}\n\nbody.lyt-smx .page .extra {\n  display: none;\n}\n\n.lyt-smx div.main {\n  min-width: 640px;\n}\n"
+    "style": "\n      div.image-wrap {\n        margin-bottom: 50px;\n      }\n\n      body.lyt-smx .page .extra {\n        display: none;\n      }\n\n      .lyt-smx div.main {\n        min-width: 640px;\n      }\n    "
   }
   // "jp__co__yahoo__headlines": {
   //   "url": "http://headlines.yahoo.co.jp/hl?a=20160413-00010006-afpbbnewsv-int",

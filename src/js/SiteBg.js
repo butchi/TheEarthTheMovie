@@ -27,6 +27,12 @@ export default class SiteBg {
     });
     $iframe.on('load', (evt) => {
       var $contents = $(evt.target).contents();
+
+      // スクロールバーを隠す
+      $contents.find('body').css({
+        overflow: 'hidden',
+      });
+
       $(evt.target.document).ready(() => {
         ['src', 'href'].forEach((ref) => {
           $contents.find('[srcset]').attr('srcset', ''); // できれば対応

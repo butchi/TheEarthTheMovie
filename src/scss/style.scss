@@ -1,5 +1,10 @@
 @import "reset";
 
+@function image-url($url) {
+  $prefix: "../img/";
+  @return url(#{$prefix}#{$url});
+}
+
 * {
   box-sizing: border-box;
 }
@@ -71,10 +76,61 @@ button {
   width: 100%;
   height: 100%;
 
-  background-image: url(../img/bg.jpg);
+  background-image: image-url("bg.jpg");
   background-size: cover;
 
   z-index: 0;
+}
+
+.browser-frame {
+  $width: 1366px;
+  $height: 61px;
+
+  position: absolute;
+
+  width: 800px;
+
+  left: 0;
+  top: 0;
+
+  z-index: 1;
+
+  .left {
+    position: absolute;
+
+    left: 0;
+    top: 0;
+
+    width: 500px;
+    height: $height;
+    background-image: image-url("browser-frame.png");
+    background-size: $width;
+    background-repeat: no-repeat;
+    background-position: 0% 0;
+  }
+
+  .right {
+    position: absolute;
+
+    right: 0;
+    top: 0;
+
+    width: 500px;
+    height: $height;
+    background-image: image-url("browser-frame.png");
+    background-size: $width;
+    background-repeat: no-repeat;
+    background-position: 100% 0;
+  }
+
+  .title {
+    position: absolute;
+
+    left: 20px;
+    top: 7px;
+
+    font-size: 11px;
+  }
 }
 
 .bg-site {
@@ -166,7 +222,7 @@ button {
     .btn-gotohead {
       width: 30px;
       height: 30px;
-      background-image: url(../img/gotohead.svg);
+      background-image: image-url("gotohead.svg");
       background-repeat: no-repeat;
       background-position: 50% 35%;
       background-size: 40px;
@@ -176,7 +232,7 @@ button {
     .btn-play {
       width: 30px;
       height: 30px;
-      background-image: url(../img/pause.svg);
+      background-image: image-url("pause.svg");
       background-repeat: no-repeat;
       background-position: 50% 35%;
       background-size: 40px;
@@ -184,12 +240,12 @@ button {
       text-indent: -9999px;
     }
     .btn-play.pause {
-      background-image: url(../img/play.svg);
+      background-image: image-url("play.svg");
     }
     .btn-sound {
       width: 30px;
       height: 30px;
-      background-image: url(../img/sound_on.svg);
+      background-image: image-url("sound_on.svg");
       background-repeat: no-repeat;
       background-position: 50% 35%;
       background-size: 40px;
@@ -201,7 +257,7 @@ button {
     .btn-setting {
       width: 30px;
       height: 30px;
-      background-image: url(../img/setting.svg);
+      background-image: image-url("setting.svg");
       background-repeat: no-repeat;
       background-position: 50% 35%;
       background-size: 40px;

@@ -97,6 +97,38 @@ button {
   background-size: cover;
   z-index: 0; }
 
+.browser-frame {
+  position: absolute;
+  width: 800px;
+  left: 0;
+  top: 0;
+  z-index: 1; }
+  .browser-frame .left {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 500px;
+    height: 61px;
+    background-image: url(../img/browser-frame.png);
+    background-size: 1366px;
+    background-repeat: no-repeat;
+    background-position: 0% 0; }
+  .browser-frame .right {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 500px;
+    height: 61px;
+    background-image: url(../img/browser-frame.png);
+    background-size: 1366px;
+    background-repeat: no-repeat;
+    background-position: 100% 0; }
+  .browser-frame .title {
+    position: absolute;
+    left: 20px;
+    top: 7px;
+    font-size: 11px; }
+
 .bg-site {
   position: static; }
   .bg-site iframe {
