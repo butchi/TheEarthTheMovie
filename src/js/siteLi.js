@@ -11,7 +11,7 @@ const siteLi = {
     "replace": {
       ".yt-thumb-clip": `<img src="//placehold.it/48x48" width="48" height="48"><span class="vertical-align"></span>`,
       "#watch-header .yt-user-info a": `${kanjiName}`,
-    }
+    },
   },
   // "jp__nicovideo": {
   //   "url": "http://www.nicovideo.jp/watch/sm1208573",
