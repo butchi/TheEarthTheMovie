@@ -9,7 +9,7 @@ const siteLi = {
     "target": "#player-api",
     "title": "#eow-title",
     "replace": {
-      ".yt-thumb-clip": `<img src="//placehold.it/48x48" width="48" height="48"><span class="vertical-align"></span>`,
+      ".yt-thumb-clip": `<img src="../img/icon-square.jpg" width="48" height="48"><span class="vertical-align"></span>`,
       "#watch-header .yt-user-info a": `${kanjiName}`,
     },
   },
@@ -49,8 +49,8 @@ const siteLi = {
     "title": "#Main #MainInner .ArticleTitle .Title h1",
     "desc": "#Main #MainInner .ArticleText p:first-child",
     "replace": {
-      "#Main #MainInner .ArticleBody .AdMod": `<img src="//placehold.it/300x300">`,
-      "#Sub #SubInner .Section .Ad": `<img src="//placehold.it/300x250">`,
+      "#Main #MainInner .ArticleBody .AdMod": `<div style="width:300px; height:300px; background: url(../img/ad-creative.jpg) center center; background-size: cover"></div>`,
+      "#Sub #SubInner .Section .Ad": `<div style="width:300px; height:250px; background: url(../img/ad-adventure.jpg) center center; background-size: cover"></div>`,
     },
     "style": `
       #Main #MainInner .ArticleBody .ImagesMod {

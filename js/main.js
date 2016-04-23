@@ -3966,8 +3966,6 @@ var Main = function () {
   _createClass(Main, [{
     key: 'initialize',
     value: function initialize() {
-      var _this2 = this;
-
       var player = new _Player2.default({
         start_date: this.epochDate,
         end_date: this.recentDate,
@@ -3989,13 +3987,17 @@ var Main = function () {
 
       this.siteBg = new _SiteBg2.default();
 
-      this.siteBg.pushBg();
-      this.siteBg.pushBg();
+      this.siteBg.pushBg(2);
+      this.siteBg.pushBg(2);
+      this.siteBg.popBg();
 
-      this.siteBgTimer = setInterval(function () {
-        _this2.siteBg.popBg();
-        _this2.siteBg.pushBg();
-      }, 15000);
+      // this.siteBg.pushBg();
+      // this.siteBg.pushBg();
+
+      // this.siteBgTimer = setInterval(() => {
+      //   this.siteBg.popBg();
+      //   this.siteBg.pushBg();
+      // }, 15000);
     }
   }, {
     key: 'formatDate',
@@ -4012,7 +4014,7 @@ var Main = function () {
   }, {
     key: 'updateTime',
     value: function updateTime() {
-      var _this3 = this;
+      var _this2 = this;
 
       var curDate = this.player.getCurrentTime();
 
@@ -4029,7 +4031,7 @@ var Main = function () {
       this.movie.render();
 
       requestAnimationFrame(function () {
-        _this3.updateTime();
+        _this2.updateTime();
       });
     }
   }]);
@@ -4059,7 +4061,7 @@ var siteLi = {
     "target": "#player-api",
     "title": "#eow-title",
     "replace": {
-      ".yt-thumb-clip": "<img src=\"//placehold.it/48x48\" width=\"48\" height=\"48\"><span class=\"vertical-align\"></span>",
+      ".yt-thumb-clip": "<img src=\"../img/icon-square.jpg\" width=\"48\" height=\"48\"><span class=\"vertical-align\"></span>",
       "#watch-header .yt-user-info a": "" + kanjiName
     }
   },
@@ -4088,8 +4090,8 @@ var siteLi = {
     "title": "#Main #MainInner .ArticleTitle .Title h1",
     "desc": "#Main #MainInner .ArticleText p:first-child",
     "replace": {
-      "#Main #MainInner .ArticleBody .AdMod": "<img src=\"//placehold.it/300x300\">",
-      "#Sub #SubInner .Section .Ad": "<img src=\"//placehold.it/300x250\">"
+      "#Main #MainInner .ArticleBody .AdMod": "<div style=\"width:300px; height:300px; background: url(../img/ad-creative.jpg) center center; background-size: cover\"></div>",
+      "#Sub #SubInner .Section .Ad": "<div style=\"width:300px; height:250px; background: url(../img/ad-adventure.jpg) center center; background-size: cover\"></div>"
     },
     "style": "\n      #Main #MainInner .ArticleBody .ImagesMod {\n        margin-bottom: 20px;\n      }\n    "
   },
