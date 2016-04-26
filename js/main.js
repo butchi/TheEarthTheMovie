@@ -3967,6 +3967,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 var RELOAD_DURATION = (4 * 60 + 33) * 1000; // 4分33秒
 // const RELOAD_DURATION = 10000;
+var FADE_DURATION = 3000;
+var FADE_IN_DURATION = FADE_DURATION;
+var FADE_OUT_DURATION = FADE_DURATION;
 
 var util = new _Util2.default();
 
@@ -4036,14 +4039,14 @@ var Main = function () {
 
       _this.openTimer = setTimeout(function () {
         _this.$overlay.addClass('over');
-      }, 3000);
+      }, FADE_IN_DURATION);
 
       _this.reloadTimer = setTimeout(function () {
         _this.$overlay.on('transitionend', function () {
           location.reload();
         });
         _this.$overlay.removeClass('over');
-      }, RELOAD_DURATION);
+      }, RELOAD_DURATION - FADE_OUT_DURATION);
     });
   }
 
@@ -4104,7 +4107,7 @@ var Main = function () {
 
       this.ratio = (curDate.valueOf() - this.player.startDate.valueOf()) / this.player.duration;
 
-      this.$browserTitle.text(this.formatTitle(curDate));
+      this.$browserTitle.text(this.formatTitle(this.recentDate));
 
       this.$timeCur.text(this.formatDate(curDate));
 

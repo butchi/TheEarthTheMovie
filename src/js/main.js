@@ -8,6 +8,9 @@ import Util from './Util';
 
 const RELOAD_DURATION = (4 * 60 + 33) * 1000; // 4分33秒
 // const RELOAD_DURATION = 10000;
+const FADE_DURATION = 3000;
+const FADE_IN_DURATION = FADE_DURATION;
+const FADE_OUT_DURATION = FADE_DURATION;
 
 const util = new Util();
 
@@ -71,14 +74,14 @@ class Main {
 
       this.openTimer = setTimeout(() => {
         this.$overlay.addClass('over');
-      }, 3000);
+      }, FADE_IN_DURATION);
 
       this.reloadTimer = setTimeout(() => {
         this.$overlay.on('transitionend', () => {
           location.reload();
         });
         this.$overlay.removeClass('over');
-      }, RELOAD_DURATION);
+      }, RELOAD_DURATION - FADE_OUT_DURATION);
     });
   }
 
@@ -130,7 +133,7 @@ class Main {
 
     this.ratio = (curDate.valueOf() - this.player.startDate.valueOf()) / this.player.duration;
 
-    this.$browserTitle.text(this.formatTitle(curDate));
+    this.$browserTitle.text(this.formatTitle(this.recentDate));
 
     this.$timeCur.text(this.formatDate(curDate));
 
@@ -144,7 +147,6 @@ class Main {
       this.updateTime();
     });
   }
-
 }
 
 window.licker = window.licker || {};
