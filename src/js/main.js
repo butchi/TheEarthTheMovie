@@ -6,6 +6,9 @@ import newsLi from './newsLi';
 import SiteBg from './SiteBg';
 import Util from './Util';
 
+const RELOAD_DURATION = (4 * 60 + 33) * 1000; // 4分33秒
+// const RELOAD_DURATION = 10000;
+
 const util = new Util();
 
 class Main {
@@ -27,6 +30,7 @@ class Main {
       this.$timeTotal = $('.controller .time-total');
       this.$btnGotohead = $('.controller .btn-gotohead');
       this.$btnPlay = $('.controller .btn-play');
+      this.$overlay = $('.overlay');
 
       requestAnimationFrame(() => {
         this.updateTime();
@@ -64,6 +68,17 @@ class Main {
       });
 
       this.initialize();
+
+      this.openTimer = setTimeout(() => {
+        this.$overlay.addClass('over');
+      }, 3000);
+
+      this.reloadTimer = setTimeout(() => {
+        this.$overlay.on('transitionend', () => {
+          location.reload();
+        });
+        this.$overlay.removeClass('over');
+      }, RELOAD_DURATION);
     });
   }
 

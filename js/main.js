@@ -3965,6 +3965,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
+var RELOAD_DURATION = (4 * 60 + 33) * 1000; // 4分33秒
+// const RELOAD_DURATION = 10000;
+
 var util = new _Util2.default();
 
 var Main = function () {
@@ -3992,6 +3995,7 @@ var Main = function () {
       _this.$timeTotal = $('.controller .time-total');
       _this.$btnGotohead = $('.controller .btn-gotohead');
       _this.$btnPlay = $('.controller .btn-play');
+      _this.$overlay = $('.overlay');
 
       requestAnimationFrame(function () {
         _this.updateTime();
@@ -4029,6 +4033,17 @@ var Main = function () {
       });
 
       _this.initialize();
+
+      _this.openTimer = setTimeout(function () {
+        _this.$overlay.addClass('over');
+      }, 3000);
+
+      _this.reloadTimer = setTimeout(function () {
+        _this.$overlay.on('transitionend', function () {
+          location.reload();
+        });
+        _this.$overlay.removeClass('over');
+      }, RELOAD_DURATION);
     });
   }
 
