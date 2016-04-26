@@ -71,7 +71,7 @@ const siteLi = {
       '#article .cntimage .preface small:first-child': true,
     },
     "replace": {
-      "#TC": `<img src="//placehold.it/728x90">`,
+      "#TC": `<div style="width:728px; height:90px; background: url(../img/ad-creative-adventure.jpg) center center; background-size: cover"></div>`,
     },
     "style": `
       #TC {

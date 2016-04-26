@@ -79,17 +79,13 @@ class Main {
 
     this.siteBg = new SiteBg();
 
-    this.siteBg.pushBg(2);
-    this.siteBg.pushBg(2);
-    this.siteBg.popBg();
+    this.siteBg.pushBg();
+    this.siteBg.pushBg();
 
-    // this.siteBg.pushBg();
-    // this.siteBg.pushBg();
-
-    // this.siteBgTimer = setInterval(() => {
-    //   this.siteBg.popBg();
-    //   this.siteBg.pushBg();
-    // }, 15000);
+    this.siteBgTimer = setInterval(() => {
+      this.siteBg.popBg();
+      this.siteBg.pushBg();
+    }, 15000);
   }
 
   formatDate(date) {

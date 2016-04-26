@@ -3966,6 +3966,8 @@ var Main = function () {
   _createClass(Main, [{
     key: 'initialize',
     value: function initialize() {
+      var _this2 = this;
+
       var player = new _Player2.default({
         start_date: this.epochDate,
         end_date: this.recentDate,
@@ -3987,17 +3989,13 @@ var Main = function () {
 
       this.siteBg = new _SiteBg2.default();
 
-      this.siteBg.pushBg(2);
-      this.siteBg.pushBg(2);
-      this.siteBg.popBg();
+      this.siteBg.pushBg();
+      this.siteBg.pushBg();
 
-      // this.siteBg.pushBg();
-      // this.siteBg.pushBg();
-
-      // this.siteBgTimer = setInterval(() => {
-      //   this.siteBg.popBg();
-      //   this.siteBg.pushBg();
-      // }, 15000);
+      this.siteBgTimer = setInterval(function () {
+        _this2.siteBg.popBg();
+        _this2.siteBg.pushBg();
+      }, 15000);
     }
   }, {
     key: 'formatDate',
@@ -4014,7 +4012,7 @@ var Main = function () {
   }, {
     key: 'updateTime',
     value: function updateTime() {
-      var _this2 = this;
+      var _this3 = this;
 
       var curDate = this.player.getCurrentTime();
 
@@ -4031,7 +4029,7 @@ var Main = function () {
       this.movie.render();
 
       requestAnimationFrame(function () {
-        _this2.updateTime();
+        _this3.updateTime();
       });
     }
   }]);
@@ -4108,7 +4106,7 @@ var siteLi = {
       '#article .cntimage .preface small:first-child': true
     },
     "replace": {
-      "#TC": "<img src=\"//placehold.it/728x90\">"
+      "#TC": "<div style=\"width:728px; height:90px; background: url(../img/ad-creative-adventure.jpg) center center; background-size: cover\"></div>"
     },
     "style": "\n      #TC {\n        width: 728px;\n        height: 90px;\n      }\n    "
   },
