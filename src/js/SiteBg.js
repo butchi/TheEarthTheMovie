@@ -1,10 +1,13 @@
 import siteLi from './siteLi';
+
 var cnt = 0;
 var $browserFrame;
 
 export default class SiteBg {
-  constructor() {
+  constructor(opts) {
     this.keys = Object.keys(siteLi);
+
+    this.news = opts.news;
 
     $browserFrame = $('.browser-frame');
   }
@@ -65,22 +68,11 @@ export default class SiteBg {
         });
 
         if(site.title) {
-          $contents.find(site.title).text('セロ弾きのゴーシュ');
+          $contents.find(site.title).text(this.news.title);
         }
 
         if(site.desc) {
-          let txt = `　ゴーシュは町の活動写真館でセロを弾く係りでした。けれどもあんまり上手でないという評判でした。上手でないどころではなく実は仲間の楽手のなかではいちばん下手でしたから、いつでも楽長にいじめられるのでした。
-　ひるすぎみんなは楽屋に円くならんで今度の町の音楽会へ出す第六交響曲こうきょうきょくの練習をしていました。
-　トランペットは一生けん命歌っています。
-　ヴァイオリンも二いろ風のように鳴っています。
-　クラリネットもボーボーとそれに手伝っています。
-　ゴーシュも口をりんと結んで眼めを皿さらのようにして楽譜がくふを見つめながらもう一心に弾いています。
-　にわかにぱたっと楽長が両手を鳴らしました。みんなぴたりと曲をやめてしんとしました。楽長がどなりました。
-「セロがおくれた。トォテテ　テテテイ、ここからやり直し。はいっ。」
-　みんなは今の所の少し前の所からやり直しました。ゴーシュは顔をまっ赤にして額に汗あせを出しながらやっといま云いわれたところを通りました。ほっと安心しながら、つづけて弾いていますと楽長がまた手をぱっと拍うちました。
-「セロっ。糸が合わない。困るなあ。ぼくはきみにドレミファを教えてまでいるひまはないんだがなあ。」
-　みんなは気の毒そうにしてわざとじぶんの譜をのぞき込こんだりじぶんの楽器をはじいて見たりしています。ゴーシュはあわてて糸を直しました。これはじつはゴーシュも悪いのですがセロもずいぶん悪いのでした。
-`.replace(/\n/g, '<br>');
+          let txt = this.news.desc.replace(/\n/g, '<br>');
           if(!site.desc_position) {
             $contents.find(site.desc).html(txt);
           }

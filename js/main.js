@@ -3710,10 +3710,12 @@ var cnt = 0;
 var $browserFrame;
 
 var SiteBg = function () {
-  function SiteBg() {
+  function SiteBg(opts) {
     _classCallCheck(this, SiteBg);
 
     this.keys = Object.keys(_siteLi2.default);
+
+    this.news = opts.news;
 
     $browserFrame = $('.browser-frame');
   }
@@ -3721,6 +3723,8 @@ var SiteBg = function () {
   _createClass(SiteBg, [{
     key: 'pushBg',
     value: function pushBg() {
+      var _this = this;
+
       var idx = arguments.length <= 0 || arguments[0] === undefined ? cnt : arguments[0];
 
       cnt = (cnt + 1) % this.keys.length;
@@ -3778,11 +3782,11 @@ var SiteBg = function () {
           });
 
           if (site.title) {
-            $contents.find(site.title).text('セロ弾きのゴーシュ');
+            $contents.find(site.title).text(_this.news.title);
           }
 
           if (site.desc) {
-            var txt = '　ゴーシュは町の活動写真館でセロを弾く係りでした。けれどもあんまり上手でないという評判でした。上手でないどころではなく実は仲間の楽手のなかではいちばん下手でしたから、いつでも楽長にいじめられるのでした。\n　ひるすぎみんなは楽屋に円くならんで今度の町の音楽会へ出す第六交響曲こうきょうきょくの練習をしていました。\n　トランペットは一生けん命歌っています。\n　ヴァイオリンも二いろ風のように鳴っています。\n　クラリネットもボーボーとそれに手伝っています。\n　ゴーシュも口をりんと結んで眼めを皿さらのようにして楽譜がくふを見つめながらもう一心に弾いています。\n　にわかにぱたっと楽長が両手を鳴らしました。みんなぴたりと曲をやめてしんとしました。楽長がどなりました。\n「セロがおくれた。トォテテ　テテテイ、ここからやり直し。はいっ。」\n　みんなは今の所の少し前の所からやり直しました。ゴーシュは顔をまっ赤にして額に汗あせを出しながらやっといま云いわれたところを通りました。ほっと安心しながら、つづけて弾いていますと楽長がまた手をぱっと拍うちました。\n「セロっ。糸が合わない。困るなあ。ぼくはきみにドレミファを教えてまでいるひまはないんだがなあ。」\n　みんなは気の毒そうにしてわざとじぶんの譜をのぞき込こんだりじぶんの楽器をはじいて見たりしています。ゴーシュはあわてて糸を直しました。これはじつはゴーシュも悪いのですがセロもずいぶん悪いのでした。\n'.replace(/\n/g, '<br>');
+            var txt = _this.news.desc.replace(/\n/g, '<br>');
             if (!site.desc_position) {
               $contents.find(site.desc).html(txt);
             }
@@ -3875,7 +3879,56 @@ exports.default = SiteBg;
 
 Object.keys(_siteLi2.default).forEach(function (name, i) {});
 
-},{"./siteLi":13}],12:[function(require,module,exports){
+},{"./siteLi":15}],12:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Util = function () {
+  function Util() {
+    _classCallCheck(this, Util);
+  }
+
+  /**
+   * URL解析して、クエリ文字列を返す
+   * @returns {Array} クエリ文字列
+   */
+
+
+  _createClass(Util, [{
+    key: "getUrlVars",
+    value: function getUrlVars() {
+      var vars = [],
+          max = 0,
+          hash = "",
+          array = "";
+      var url = window.location.search;
+
+      //?を取り除くため、1から始める。複数のクエリ文字列に対応するため、&で区切る
+      hash = url.slice(1).split('&');
+      max = hash.length;
+      for (var i = 0; i < max; i++) {
+        array = hash[i].split('='); //keyと値に分割。
+        vars.push(array[0]); //末尾にクエリ文字列のkeyを挿入。
+        vars[array[0]] = array[1]; //先ほど確保したkeyに、値を代入。
+      }
+
+      return vars;
+    }
+  }]);
+
+  return Util;
+}();
+
+exports.default = Util;
+
+},{}],13:[function(require,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -3896,13 +3949,23 @@ var _siteLi = require('./siteLi');
 
 var _siteLi2 = _interopRequireDefault(_siteLi);
 
+var _newsLi = require('./newsLi');
+
+var _newsLi2 = _interopRequireDefault(_newsLi);
+
 var _SiteBg = require('./SiteBg');
 
 var _SiteBg2 = _interopRequireDefault(_SiteBg);
 
+var _Util = require('./Util');
+
+var _Util2 = _interopRequireDefault(_Util);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var util = new _Util2.default();
 
 var Main = function () {
   function Main() {
@@ -3914,7 +3977,13 @@ var Main = function () {
 
     $(function () {
       var now = new Date();
+
+      _this.newsObj = _.sample(_newsLi2.default);
+
+      var newsDate = new Date(_this.newsObj.date);
+
       _this.recentDate = new Date(now.getFullYear(), now.getMonth(), now.getDate(), now.getHours(), 4, 33);
+      _this.startDate = new Date(newsDate.getFullYear(), newsDate.getMonth(), newsDate.getDate(), Math.floor(Math.random() * 24), 0, 0);
       _this.epochDate = new Date(-62135596800000 - 9 * 60 * 60 * 1000); // 西暦1年1月1日0時0分0秒（日本時間）
       _this.$slider = $('.slider');
       _this.$browserFrame = $('.browser-frame');
@@ -3969,7 +4038,7 @@ var Main = function () {
       var _this2 = this;
 
       var player = new _Player2.default({
-        start_date: this.epochDate,
+        start_date: this.startDate || this.epochDate,
         end_date: this.recentDate,
         $btn_play: this.$btnPlay,
         $slider: this.$slider
@@ -3987,7 +4056,9 @@ var Main = function () {
       this.earth.animate();
       this.movie = new _Movie2.default();
 
-      this.siteBg = new _SiteBg2.default();
+      this.siteBg = new _SiteBg2.default({
+        news: this.newsObj
+      });
 
       this.siteBg.pushBg();
       this.siteBg.pushBg();
@@ -4006,7 +4077,7 @@ var Main = function () {
   }, {
     key: 'formatTitle',
     value: function formatTitle(date) {
-      var ret = date.getFullYear() - 1 + '年' + date.getMonth() + 'ヶ月' + (date.getDate() - 1) + '日' + date.getHours() + '時間' + date.getMinutes() + '分' + date.getSeconds() + '秒';
+      var ret = date.getFullYear() + '年' + (date.getMonth() + 1) + 'ヶ月' + date.getDate() + '日' + date.getHours() + '時間' + date.getMinutes() + '分' + date.getSeconds() + '秒';
       return ret;
     }
   }, {
@@ -4042,7 +4113,37 @@ window.licker = window.licker || {};
   ns.main = new Main();
 })(window.licker);
 
-},{"./Earth":8,"./Movie":9,"./Player":10,"./SiteBg":11,"./siteLi":13}],13:[function(require,module,exports){
+},{"./Earth":8,"./Movie":9,"./Player":10,"./SiteBg":11,"./Util":12,"./newsLi":14,"./siteLi":15}],14:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var newsLi = [{
+  "date": "2007-01-10",
+  "title": "アップルコンピュータ、「iPhone」を発表",
+  "desc": "アップルコンピュータはサンフランシスコで9日、同社としては初の携帯電話「iPhone」を発表した。\n      通信方式は2GのGSMクワッドバンド(850/900/1800/1900MHz)とEDGEに対応していて、日本で主に普及している3GのW-CDMA(2GHz)などには対応していない。ディスプレイは3.5インチの液晶を搭載していて、タッチパネルとなっている。なお、キーボードは搭載しておらず、液晶のタッチパネルよりダイヤルや文字を入力する。iPod、デジタルカメラとしても使用できる。Bluetooth 2.0やIEEE 802.11b/gの無線通信機能に対応しており、基本ソフトには同社のMac OS Xのサブセット版を採用している。本体の寸法は厚さ11.6ミリと薄型で重さは約136グラムである。\n      アメリカでは2007年6月にシンギュラー・ワイヤレス社と契約での販売が予定されており、価格はシンギュラー・ワイヤレスとの2年契約込みで、8GBモデルが599ドル、4GBモデルが499ドルを予定している。ヨーロッパでは2007年後半、アジアでは2008年以降の発売を予定している。\n      なお、iPhoneの商標権を所有するシスコシステムズが10日、アップルコンピュータをカリフォルニア州北部連邦地方裁判所に提訴した。アップルコンピュータがシスコシステムズに対して商標権の使用許可を要請し、交渉していたが、合意に至っていない。"
+}, {
+  "date": "2009-06-26",
+  "title": "アメリカのエンターテイナー・マイケル・ジャクソン氏急逝",
+  "desc": "アメリカの人気歌手であるマイケル・ジャクソン氏が6月25日に同国ロサンゼルスで死去した。50歳だった。\n      実兄の話では「マイケル氏は25日午前中にロサンゼルス市内西部の自宅で倒れ、心肺停止となった。通報を受けた救急隊によりカリフォルニア州立大学・ロサンゼルス校（UCLA）の付属病院に搬送され医師団によって蘇生を行ったが、25日午後2時26分（日本時間26日午前6時26分）死亡が確認された」としている。\n      マイケル氏はこの夏コンサートツアーが予定されていたが、健康上の不安もあったという。\n      マイケル氏は1958年生まれ。その後兄弟5人で「ジャクソン5」を結成し、リードボーカルとして活躍。その後ソロデビューし、1982年発売の「スリラー」は全世界で1億枚以上を売り上げる大ヒットとなった。"
+}, {
+  "date": "2011-03-11",
+  "title": "日本・三陸沖を震源とするマグニチュード8.8の地震、東京など各地でも揺れや津波も",
+  "desc": "2011年3月11日午後2時46分頃、日本の三陸沖を震源とする大規模な地震があった。日本の気象庁は震源地を宮城県牡鹿半島の東南東130kmとし、深さは約24kmで地震の規模を示すマグニチュード(M)は8.8と発表した。アメリカ地質調査所(USGS)ではM8.9などとしている。\n      読売新聞、朝日新聞によると、この地震により宮城県栗原市で震度7を観測した。また、朝日新聞によると、東京23区で震度5強など、北海道から九州にかけて広い範囲で震度6強から震度1の揺れを観測したと報じている。\n      朝日新聞は気象庁の発表として、震度7を観測したのは2004年に発生した新潟中越地震以来。記録を開始した1923年以降で、国内最大規模の地震であるとしている。また、地震の名前を平成23年(2011年)東北地方太平洋沖地震とすることを発表した。"
+}, {
+  "date": "2011-12-15",
+  "title": "アメリカ・オバマ大統領がイラク戦争の終結を宣言",
+  "desc": "アメリカのバラク・オバマ大統領は、12月14日にノースカロライナ州フォートブラッグ陸軍基地に於いて、イラク駐留米軍部隊の撤退の完了が近付いてきているのを前に演説を行なった。\n      演説でオバマ大統領は、「イラクの将来はイラク国民の手に委ねられ、イラク戦争は終結する」と宣言した。また、読売新聞がオバマ大統領の演説内容として伝えたところによると、現在、約5,500人に減少したイラク駐留米軍が、12月15日にバグダッドで解散式を実施し、任務は正式完了する。\n      これにより、アメリカのブッシュ前政権が2003年に国連安全保障理事会の討議を打ち切る形で強硬的に開戦し、「違法な戦争」と国際的な批判までも浴びた戦争が、開戦から約9年ぶりに正式に幕を閉じることになる。\n      オバマ大統領は、イラク戦争からの帰還兵を前にした演説で、最後の部隊が近くイラク国境を越え、イラク戦争が「歴史の一部になる」と述べ、「アメリカと米軍にとっての歴史的瞬間」を迎えたとの認識を示すと共に、多大な犠牲を払いつつ軍事作戦や復興任務に従事した米軍の「偉大な功績」を称賛した。また、オバマ大統領自身が反対の立場を取ったイラク戦争の、開戦時の正当性を巡る論争にも言及し、「多くの紆余曲折があった」と指摘する一方で、「我々は、主権を持ち、安定し、自立したイラクを後に残した」と述べ、戦争がもたらした成果も強調した。\n      オバマ大統領はその一方で、イラク戦争で「4,500人近いアメリカ人が犠牲となった」と指摘し、米兵と家族の「労苦と献身」を労い、また、戦死者に哀悼の意を示した。なお、オバマ大統領は、イラク戦争がアメリカの「勝利」だったかについては明言しなかった。"
+}, {
+  "date": "2015-11-15",
+  "title": "フランス・パリで同時多発テロ 120人以上が犠牲",
+  "desc": "現地時間11月13日夜、フランスのパリで同時多発テロ事件が発生し、パリ市中心部の劇場やレストラン、また郊外のサッカー場などが、武装勢力による襲撃の被害にあった。この事件で少なくとも127人が死亡、300人以上がけがを負った。\n      今回のテロは、パリ郊外のサッカー場で行われたフランス対ドイツの試合会場近くのバーで自爆テロとみられる爆発が起こったことが発端で、この後すぐにパリ市北部のコンサート会場で、アメリカから出演したロックバンドのコンサート中に、武装した男ら数人が会場の外のカフェで自動小銃を乱射し、そのまま会場に入って乱射行為を10分から15分以上続けたという。コンサート会場には1000人を超える聴衆がおり、ある観客は「コンサート中にすぐ後ろで大きな音がして、誰もがショーの演出だと思った。みんなで身を寄せ、身体を地締めていたが、犯人のテロリストは四方八方に発砲を続けた」と当時を語っている。この会場でも治安部隊が突入し、犯人が自爆行為をするなど、さながら戦場のような雰囲気だったといい、会場にいた少なくとも80人以上が死亡。犯人も死亡した。\n      フランスのオランド大統領は、「前例のないテロが起きた」として、1962年のアルジェリア戦争終結以来となる、非常事態宣言を発令、フランスとの国境を封鎖すると発表し、国民に対しても冷静な対応と結束をするように呼びかけた。\n      さらにオランド大統領は緊急国防会議後の会見で「周到に準備された戦争行為であり、IS（イスラム国）によって実行された」と、このテロ事件はISによる犯行であるとする見方を示した。"
+}];
+
+exports.default = newsLi;
+
+},{}],15:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -4128,4 +4229,4 @@ var siteLi = {
 
 exports.default = siteLi;
 
-},{}]},{},[12]);
+},{}]},{},[13]);

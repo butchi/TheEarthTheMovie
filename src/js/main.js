@@ -2,13 +2,23 @@ import Player from './Player';
 import Earth from './Earth';
 import Movie from './Movie';
 import siteLi from './siteLi';
+import newsLi from './newsLi';
 import SiteBg from './SiteBg';
+import Util from './Util';
+
+const util = new Util();
 
 class Main {
   constructor(opts = {}) {
     $(() => {
       var now = new Date();
+
+      this.newsObj = _.sample(newsLi);
+
+      var newsDate = new Date(this.newsObj.date);
+
       this.recentDate = new Date(now.getFullYear(), now.getMonth(), now.getDate(), now.getHours(), 4, 33);
+      this.startDate = new Date(newsDate.getFullYear(), newsDate.getMonth(), newsDate.getDate(), Math.floor(Math.random() * 24), 0, 0);
       this.epochDate = new Date(-62135596800000 - 9 * 60 * 60 * 1000); // 西暦1年1月1日0時0分0秒（日本時間）
       this.$slider = $('.slider');
       this.$browserFrame = $('.browser-frame');
@@ -59,7 +69,7 @@ class Main {
 
   initialize() {
     var player = new Player({
-      start_date: this.epochDate,
+      start_date: this.startDate || this.epochDate,
       end_date: this.recentDate,
       $btn_play: this.$btnPlay,
       $slider: this.$slider,
@@ -77,7 +87,9 @@ class Main {
     this.earth.animate();
     this.movie = new Movie();
 
-    this.siteBg = new SiteBg();
+    this.siteBg = new SiteBg({
+      news: this.newsObj,
+    });
 
     this.siteBg.pushBg();
     this.siteBg.pushBg();
@@ -94,7 +106,7 @@ class Main {
   }
 
   formatTitle(date) {
-    var ret = `${date.getFullYear() - 1}年${date.getMonth()}ヶ月${date.getDate() - 1}日${date.getHours()}時間${date.getMinutes()}分${date.getSeconds()}秒`;
+    var ret = `${date.getFullYear()}年${date.getMonth() + 1}ヶ月${date.getDate()}日${date.getHours()}時間${date.getMinutes()}分${date.getSeconds()}秒`;
     return ret;
   }
 
