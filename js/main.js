@@ -3913,8 +3913,9 @@ var Main = function () {
     _classCallCheck(this, Main);
 
     $(function () {
-      _this.recentDate = new Date(2016, 3, 30, 13 + 9, 4, 33);
-      _this.epochDate = new Date(-62135596800000); // 西暦1年1月1日0時0分0秒
+      var now = new Date();
+      _this.recentDate = new Date(now.getFullYear(), now.getMonth(), now.getDate(), now.getHours(), 4, 33);
+      _this.epochDate = new Date(-62135596800000 - 9 * 60 * 60 * 1000); // 西暦1年1月1日0時0分0秒（日本時間）
       // var epochDate = new Date(2016, 3, 30, 13 + 9, 4, 20);
       _this.$slider = $('.slider');
       _this.$browserFrame = $('.browser-frame');
@@ -4000,13 +4001,13 @@ var Main = function () {
   }, {
     key: 'formatDate',
     value: function formatDate(date) {
-      var ret = date.getUTCFullYear() + '年' + (date.getUTCMonth() + 1) + '月' + date.getUTCDate() + '日 ' + ('00' + date.getUTCHours()).slice(-2) + ':' + ('00' + date.getUTCMinutes()).slice(-2) + ':' + ('00' + date.getUTCSeconds()).slice(-2);
+      var ret = date.getFullYear() + '年' + (date.getMonth() + 1) + '月' + date.getDate() + '日 ' + ('00' + date.getHours()).slice(-2) + ':' + ('00' + date.getMinutes()).slice(-2) + ':' + ('00' + date.getSeconds()).slice(-2);
       return ret;
     }
   }, {
     key: 'formatTitle',
     value: function formatTitle(date) {
-      var ret = date.getUTCFullYear() - 1 + '年' + date.getUTCMonth() + 'ヶ月' + (date.getUTCDate() - 1) + '日' + date.getUTCHours() + '時間' + date.getUTCMinutes() + '分' + date.getUTCSeconds() + '秒';
+      var ret = date.getFullYear() - 1 + '年' + date.getMonth() + 'ヶ月' + (date.getDate() - 1) + '日' + date.getHours() + '時間' + date.getMinutes() + '分' + date.getSeconds() + '秒';
       return ret;
     }
   }, {
