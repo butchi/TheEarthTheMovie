@@ -10,7 +10,6 @@ class Main {
       var now = new Date();
       this.recentDate = new Date(now.getFullYear(), now.getMonth(), now.getDate(), now.getHours(), 4, 33);
       this.epochDate = new Date(-62135596800000 - 9 * 60 * 60 * 1000); // 西暦1年1月1日0時0分0秒（日本時間）
-      // var epochDate = new Date(2016, 3, 30, 13 + 9, 4, 20);
       this.$slider = $('.slider');
       this.$browserFrame = $('.browser-frame');
       this.$browserTitle = this.$browserFrame.find('.title');
