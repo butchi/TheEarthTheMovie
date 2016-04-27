@@ -3568,6 +3568,15 @@ var Movie = function () {
 
       var rawImageData = this.ctxEarth.getImageData(0, 0, width, height);
 
+      for (var _i = 0; _i < rawImageData.data.length; _i += 4) {
+        var dat = rawImageData.data;
+        var rnd = Math.floor((Math.random() - 0.5) * 30);
+
+        dat[_i] += rnd;
+        dat[_i + 1] += rnd;
+        dat[_i + 2] += rnd;
+      }
+
       var jpegImageData = _jpegJs2.default.decode(_jpegJs2.default.encode(rawImageData, 20).data);
 
       // copy img byte-per-byte into our ImageData

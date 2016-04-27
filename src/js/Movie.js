@@ -21,6 +21,15 @@ export default class Movie {
 
     var rawImageData = this.ctxEarth.getImageData(0, 0, width, height);
 
+    for(let i = 0; i < rawImageData.data.length; i += 4) {
+        let dat = rawImageData.data;
+        let rnd = Math.floor((Math.random() - 0.5) * 30);
+
+        dat[i] += rnd;
+        dat[i + 1] += rnd;
+        dat[i + 2] += rnd;
+    }
+
     var jpegImageData = jpeg.decode(jpeg.encode(rawImageData, 20).data);
 
     // copy img byte-per-byte into our ImageData
