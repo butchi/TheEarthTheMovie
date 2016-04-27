@@ -77,7 +77,7 @@ class Main {
       }, FADE_IN_DURATION);
 
       this.reloadTimer = setTimeout(() => {
-        this.$overlay.on('transitionend', () => {
+        this.$overlay.one('transitionend', () => {
           location.reload();
         });
         this.$overlay.removeClass('over');

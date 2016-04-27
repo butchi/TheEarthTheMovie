@@ -3708,6 +3708,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 var cnt = 0;
 var $browserFrame;
+var $media;
 
 var SiteBg = function () {
   function SiteBg(opts) {
@@ -3718,6 +3719,7 @@ var SiteBg = function () {
     this.news = opts.news;
 
     $browserFrame = $('.browser-frame');
+    $media = $('.media');
   }
 
   _createClass(SiteBg, [{
@@ -3859,6 +3861,10 @@ var SiteBg = function () {
       $last.remove();
       $last2.css({
         "visibility": 'visible'
+      });
+
+      $media.css({
+        visibility: 'visible'
       });
 
       $browserFrame.css({
@@ -4042,7 +4048,7 @@ var Main = function () {
       }, FADE_IN_DURATION);
 
       _this.reloadTimer = setTimeout(function () {
-        _this.$overlay.on('transitionend', function () {
+        _this.$overlay.one('transitionend', function () {
           location.reload();
         });
         _this.$overlay.removeClass('over');

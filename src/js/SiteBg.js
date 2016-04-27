@@ -2,6 +2,7 @@ import siteLi from './siteLi';
 
 var cnt = 0;
 var $browserFrame;
+var $media;
 
 export default class SiteBg {
   constructor(opts) {
@@ -10,6 +11,7 @@ export default class SiteBg {
     this.news = opts.news;
 
     $browserFrame = $('.browser-frame');
+    $media = $('.media');
   }
 
   pushBg(idx = cnt) {
@@ -144,6 +146,10 @@ export default class SiteBg {
     $last.remove();
     $last2.css({
       "visibility": 'visible',
+    });
+
+    $media.css({
+      visibility: 'visible',
     });
 
     $browserFrame.css({
