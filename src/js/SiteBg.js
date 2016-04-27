@@ -12,6 +12,8 @@ export default class SiteBg {
 
     $browserFrame = $('.browser-frame');
     $media = $('.media');
+
+    this.$frameOpen = $('.frame-open');
   }
 
   pushBg(idx = cnt) {
@@ -150,6 +152,19 @@ export default class SiteBg {
 
     $media.css({
       "visibility": 'visible',
+    });
+
+    this.$frameOpen.on('transitionend', () => {
+      this.$frameOpen.removeClass('open');
+    });
+
+    this.$frameOpen.addClass('open');
+
+    this.$frameOpen.css({
+      width: $last2.width(),
+      height: $last2.width(),
+      left: $last2.offset().left,
+      top: $last2.offset().top,
     });
 
     $browserFrame.css({

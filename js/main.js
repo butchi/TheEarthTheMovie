@@ -3720,6 +3720,8 @@ var SiteBg = function () {
 
     $browserFrame = $('.browser-frame');
     $media = $('.media');
+
+    this.$frameOpen = $('.frame-open');
   }
 
   _createClass(SiteBg, [{
@@ -3855,6 +3857,8 @@ var SiteBg = function () {
   }, {
     key: 'popBg',
     value: function popBg() {
+      var _this2 = this;
+
       var $last = $('.bg-site').find('iframe:last-child');
       var $last2 = $('.bg-site').find('iframe:nth-last-child(2)');
 
@@ -3865,6 +3869,19 @@ var SiteBg = function () {
 
       $media.css({
         "visibility": 'visible'
+      });
+
+      this.$frameOpen.on('transitionend', function () {
+        _this2.$frameOpen.removeClass('open');
+      });
+
+      this.$frameOpen.addClass('open');
+
+      this.$frameOpen.css({
+        width: $last2.width(),
+        height: $last2.width(),
+        left: $last2.offset().left,
+        top: $last2.offset().top
       });
 
       $browserFrame.css({
