@@ -161,6 +161,3 @@ export default class SiteBg {
     $last = null;
   }
 }
-
-    Object.keys(siteLi).forEach((name, i) => {
-    });

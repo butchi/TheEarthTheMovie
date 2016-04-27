@@ -3882,9 +3882,6 @@ var SiteBg = function () {
 
 exports.default = SiteBg;
 
-
-Object.keys(_siteLi2.default).forEach(function (name, i) {});
-
 },{"./siteLi":15}],12:[function(require,module,exports){
 "use strict";
 
