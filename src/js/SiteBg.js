@@ -141,7 +141,7 @@ export default class SiteBg {
 
   popBg() {
     var $last = $('.bg-site').find('iframe:last-child');
-    var $last2 = $('.bg-site').find('iframe:nth-last-child(2)')
+    var $last2 = $('.bg-site').find('iframe:nth-last-child(2)');
 
     $last.remove();
     $last2.css({
@@ -149,7 +149,7 @@ export default class SiteBg {
     });
 
     $media.css({
-      visibility: 'visible',
+      "visibility": 'visible',
     });
 
     $browserFrame.css({

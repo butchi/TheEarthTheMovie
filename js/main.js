@@ -3864,7 +3864,7 @@ var SiteBg = function () {
       });
 
       $media.css({
-        visibility: 'visible'
+        "visibility": 'visible'
       });
 
       $browserFrame.css({
