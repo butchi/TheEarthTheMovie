@@ -70,7 +70,7 @@ class Main {
         $slider.val(0);
       });
 
-      this.initialize();
+      // this.initialize();
 
       this.openTimer = setTimeout(() => {
         this.$overlay.addClass('over');

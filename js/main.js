@@ -4319,7 +4319,7 @@ var Main = function () {
         $slider.val(0);
       });
 
-      _this.initialize();
+      // this.initialize();
 
       _this.openTimer = setTimeout(function () {
         _this.$overlay.addClass('over');
