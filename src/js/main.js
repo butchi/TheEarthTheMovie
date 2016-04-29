@@ -81,7 +81,7 @@ class Main {
           location.reload();
         });
         this.$overlay.removeClass('over');
-      }, RELOAD_DURATION - FADE_OUT_DURATION);
+      }, RELOAD_DURATION);
     });
   }
 
