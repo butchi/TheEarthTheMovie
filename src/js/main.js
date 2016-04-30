@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 import Player from './Player';
 import Earth from './Earth';
 import Movie from './Movie';
@@ -39,7 +41,7 @@ class Main {
         this.updateTime();
       });
 
-      this.$timeTotal.text(this.formatDate(this.recentDate));
+      this.$timeTotal.text(moment(this.recentDate).format('YYYY年M月D日 HH:mm:ss'));
 
       this.$slider.on('input', (evt) => {
         this.ratio = $(evt.target).val();
@@ -110,6 +112,9 @@ class Main {
       news: this.newsObj,
     });
 
+    // this.siteBg.pushBg(0);
+    // this.siteBg.popBg();
+
     this.siteBg.pushBg();
 
     this.siteBgTimer = setInterval(() => {
@@ -118,24 +123,14 @@ class Main {
     }, 15000);
   }
 
-  formatDate(date) {
-    var ret = `${date.getFullYear()}年${date.getMonth() + 1}月${date.getDate()}日 ${('00' + (date.getHours())).slice(-2)}:${('00' + (date.getMinutes())).slice(-2)}:${('00' + (date.getSeconds())).slice(-2)}`;
-    return ret;
-  }
-
-  formatTitle(date) {
-    var ret = `${date.getFullYear()}年${date.getMonth() + 1}ヶ月${date.getDate()}日${date.getHours()}時間${date.getMinutes()}分${date.getSeconds()}秒`;
-    return ret;
-  }
-
   updateTime() {
     var curDate = this.player.getCurrentTime();
 
     this.ratio = (curDate.valueOf() - this.epochDate.valueOf()) / this.player.duration;
 
-    this.$browserTitle.text(this.formatTitle(this.recentDate));
+    this.$browserTitle.text(moment(this.recentDate).format('YYYY年Mヶ月D日H時間m分s秒'));
 
-    this.$timeCur.text(this.formatDate(curDate));
+    this.$timeCur.text(moment(curDate).format('YYYY年M月D日 HH:mm:ss'));
 
     this.$slider.css({
       left: (this.ratio * 100) + '%',

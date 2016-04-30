@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 import siteLi from './siteLi';
 
 var cnt = 0;
@@ -71,10 +73,6 @@ export default class SiteBg {
           });
         });
 
-        if(site.title) {
-          $contents.find(site.title).text(this.news.title);
-        }
-
         if(site.desc) {
           let txt = this.news.desc.replace(/\n/g, '<br>');
           if(!site.desc_position) {
@@ -98,7 +96,17 @@ export default class SiteBg {
 
         if(site.replace) {
           Object.keys(site.replace).forEach((selector) => {
-            $contents.find(selector).html(site.replace[selector]);
+            var tmpl = site.replace[selector];
+            if(typeof tmpl === 'function') {
+              $contents.find(selector).html(tmpl({
+                "title": this.news.title,
+                "start_moment": moment(window.licker.main.startDate),
+                "recent_moment": moment(window.licker.main.recentDate),
+              }));
+            } else {
+              let after = site.replace[selector];
+              $contents.find(selector).html(after);
+            }
           });
         }
 
