@@ -19,14 +19,20 @@ const util = new Util();
 class Main {
   constructor(opts = {}) {
     $(() => {
-      var now = new Date();
+      var nowMoment = moment();
+      var now = nowMoment.toDate();
 
-      this.newsObj = _.sample(newsLi);
+      var newsId = parseInt(util.getUrlVars().news) || 0;
 
-      var newsDate = new Date(this.newsObj.date);
+      this.newsObj = newsLi[newsId];
 
-      this.recentDate = new Date(now.getFullYear(), now.getMonth(), now.getDate(), now.getHours(), 4, 33);
-      this.startDate = new Date(newsDate.getFullYear(), newsDate.getMonth(), newsDate.getDate(), Math.floor(Math.random() * 24), 0, 0);
+      var newsMoment = moment(this.newsObj.date);
+      var newsDate = newsMoment.toDate();
+
+      var recentMoment = moment([nowMoment.year(), nowMoment.month(), nowMoment.date(), nowMoment.hours(), 4, 33]);
+      this.recentDate = recentMoment.toDate();
+      var startMoment = moment([newsMoment.year(), newsMoment.month(), newsMoment.date(), Math.floor(Math.random() * 24), 0, 0])
+      this.startDate = startMoment.toDate();
       this.epochDate = new Date(-62135596800000 - 9 * 60 * 60 * 1000); // 西暦1年1月1日0時0分0秒（日本時間）
       this.$slider = $('.slider-cur');
       this.$browserFrame = $('.browser-frame');
@@ -79,8 +85,9 @@ class Main {
       }, FADE_IN_DURATION);
 
       this.reloadTimer = setTimeout(() => {
+        var nextNewsId = (newsId + 1) % newsLi.length;
         this.$overlay.one('transitionend', () => {
-          location.reload();
+          location.href = `./?news=${nextNewsId}`;
         });
         this.$overlay.removeClass('over');
       }, RELOAD_DURATION);
