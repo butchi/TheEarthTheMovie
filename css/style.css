@@ -194,48 +194,19 @@ button {
     width: 640px;
     height: 30px;
     color: #fff;
-    background-color: #333; }
+    background-image: url(../img/media-skin.png);
+    background-size: 640px; }
     .media .controller .time {
-      display: inline-block;
+      display: block;
+      position: absolute;
+      left: 100px;
       width: 280px;
+      height: 30px;
+      line-height: 30px;
       font-family: Roboto;
       font-weight: 400;
       font-size: 9px;
       text-align: center; }
-    .media .controller .btn-gotohead {
-      width: 30px;
-      height: 30px;
-      background-image: url(../img/gotohead.svg);
-      background-repeat: no-repeat;
-      background-position: 50% 35%;
-      background-size: 40px;
-      text-indent: -9999px; }
-    .media .controller .btn-play {
-      width: 30px;
-      height: 30px;
-      background-image: url(../img/pause.svg);
-      background-repeat: no-repeat;
-      background-position: 50% 35%;
-      background-size: 40px;
-      text-indent: -9999px; }
-    .media .controller .btn-play.pause {
-      background-image: url(../img/play.svg); }
-    .media .controller .btn-sound {
-      width: 30px;
-      height: 30px;
-      background-image: url(../img/sound_on.svg);
-      background-repeat: no-repeat;
-      background-position: 50% 35%;
-      background-size: 40px;
-      text-indent: -9999px; }
-    .media .controller .btn-setting {
-      width: 30px;
-      height: 30px;
-      background-image: url(../img/setting.svg);
-      background-repeat: no-repeat;
-      background-position: 50% 35%;
-      background-size: 40px;
-      text-indent: -9999px; }
 
 .overlay {
   position: absolute;

@@ -4330,7 +4330,7 @@ var Main = function () {
           location.reload();
         });
         _this.$overlay.removeClass('over');
-      }, RELOAD_DURATION - FADE_OUT_DURATION);
+      }, RELOAD_DURATION);
     });
   }
 
