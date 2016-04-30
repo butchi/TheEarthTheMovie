@@ -207,6 +207,23 @@ button {
       font-weight: 400;
       font-size: 9px;
       text-align: center; }
+    .media .controller .slider {
+      position: absolute;
+      left: 400px;
+      top: 50%;
+      width: 100px;
+      height: 4px;
+      margin-top: -2px;
+      background-color: #999; }
+      .media .controller .slider .slider-cur {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 6px;
+        height: 16px;
+        margin-top: -6px;
+        margin-left: -3px;
+        background-color: #ccc; }
 
 .overlay {
   position: absolute;

@@ -85,8 +85,8 @@ gulp.task 'deco', () ->
     .pipe (rename 'main.deco.js')
     .pipe (gulp.dest "#{DEST}/js")
 
-# gulp.task 'js', gulp.parallel('browserify', 'copy-bower')
-gulp.task 'js', gulp.series(gulp.parallel('browserify', 'copy-bower'), gulp.parallel('minify', 'deco'))
+gulp.task 'js', gulp.parallel('browserify', 'copy-bower')
+# gulp.task 'js', gulp.series(gulp.parallel('browserify', 'copy-bower'), gulp.parallel('minify', 'deco'))
 
 gulp.task 'browser-sync' , () ->
   browserSync

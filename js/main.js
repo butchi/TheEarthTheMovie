@@ -3863,7 +3863,8 @@ var Player = function () {
   function Player(opts) {
     _classCallCheck(this, Player);
 
-    this.startDate = opts.start_date || new Date(-62135596800000);;
+    this.startDate = new Date(-62135596800000);;
+    this.firstDate = opts.first_date || this.startDate;
     this.endDate = opts.end_date || new Date();
     this.duration = this.endDate.valueOf() - this.startDate.valueOf();
 
@@ -3902,6 +3903,8 @@ var Player = function () {
         }
         _this.curDate = new Date(_this.curDate.valueOf() + 1000);
       }, 1000);
+
+      this.seekTo(this.firstDate);
     }
   }, {
     key: 'pauseVideo',
@@ -4275,7 +4278,7 @@ var Main = function () {
       _this.recentDate = new Date(now.getFullYear(), now.getMonth(), now.getDate(), now.getHours(), 4, 33);
       _this.startDate = new Date(newsDate.getFullYear(), newsDate.getMonth(), newsDate.getDate(), Math.floor(Math.random() * 24), 0, 0);
       _this.epochDate = new Date(-62135596800000 - 9 * 60 * 60 * 1000); // 西暦1年1月1日0時0分0秒（日本時間）
-      _this.$slider = $('.slider');
+      _this.$slider = $('.slider-cur');
       _this.$browserFrame = $('.browser-frame');
       _this.$browserTitle = _this.$browserFrame.find('.title');
       _this.$timeCur = $('.controller .time-cur');
@@ -4340,7 +4343,8 @@ var Main = function () {
       var _this2 = this;
 
       var player = new _Player2.default({
-        start_date: this.startDate || this.epochDate,
+        start_date: this.epochDate,
+        first_date: this.startDate,
         end_date: this.recentDate,
         $btn_play: this.$btnPlay,
         $slider: this.$slider
@@ -4389,11 +4393,15 @@ var Main = function () {
 
       var curDate = this.player.getCurrentTime();
 
-      this.ratio = (curDate.valueOf() - this.player.startDate.valueOf()) / this.player.duration;
+      this.ratio = (curDate.valueOf() - this.epochDate.valueOf()) / this.player.duration;
 
       this.$browserTitle.text(this.formatTitle(this.recentDate));
 
       this.$timeCur.text(this.formatDate(curDate));
+
+      this.$slider.css({
+        left: this.ratio * 100 + '%'
+      });
 
       if (this.player.getPlayerState() === this.player.PlayerState.PLAYING) {
         this.$slider.val(this.ratio);

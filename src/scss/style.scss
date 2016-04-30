@@ -247,6 +247,35 @@ button {
       text-align: center;
     }
 
+    .slider {
+      position: absolute;
+
+      left: 400px;
+      top: 50%;
+
+      width: 100px;
+      height: 4px;
+
+      margin-top: -2px;
+
+      background-color: #999;
+
+      .slider-cur {
+        position: absolute;
+
+        left: 0;
+        top: 0;
+
+        width: 6px;
+        height: 16px;
+
+        margin-top: -6px;
+        margin-left: -3px;
+
+        background-color: #ccc;
+      }
+    }
+
     // .btn-gotohead {
     //   width: 30px;
     //   height: 30px;

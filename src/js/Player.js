@@ -1,6 +1,7 @@
 export default class Player {
   constructor(opts) {
-    this.startDate = opts.start_date || new Date(-62135596800000);;
+    this.startDate = new Date(-62135596800000);;
+    this.firstDate = opts.first_date || this.startDate;
     this.endDate = opts.end_date || new Date();
     this.duration = this.endDate.valueOf() - this.startDate.valueOf();
 
@@ -34,6 +35,8 @@ export default class Player {
       }
       this.curDate = new Date(this.curDate.valueOf() + 1000);
     }, 1000);
+
+    this.seekTo(this.firstDate);
   }
 
   pauseVideo() {
