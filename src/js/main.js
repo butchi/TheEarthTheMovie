@@ -111,7 +111,6 @@ class Main {
     });
 
     this.siteBg.pushBg();
-    this.siteBg.pushBg();
 
     this.siteBgTimer = setInterval(() => {
       this.siteBg.popBg();

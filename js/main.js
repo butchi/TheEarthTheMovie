@@ -4367,7 +4367,6 @@ var Main = function () {
       });
 
       this.siteBg.pushBg();
-      this.siteBg.pushBg();
 
       this.siteBgTimer = setInterval(function () {
         _this2.siteBg.popBg();
@@ -4468,8 +4467,8 @@ var siteLi = {
     "width": 960,
     "height": 1600,
     "target": "#player-api",
-    "title": "#eow-title",
     "replace": {
+      "#eow-title": "地球というメディアにおける2016年間",
       ".yt-thumb-clip": "<img src=\"../img/icon-square.jpg\" width=\"48\" height=\"48\"><span class=\"vertical-align\"></span>",
       "#watch-header .yt-user-info a": "" + kanjiName
     }
